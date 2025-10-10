@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+
+
+body {
+  background-color: #0c0a09;
+  color: white;
+  
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse at bottom,
+    rgba(255, 159, 28, 0.2),  /* Saffron glow */
+    rgba(255, 255, 255, 0),    /* Transparent center */
+    rgba(19, 136, 8, 0.2)      /* Green glow */
+  );
+  filter: blur(100px);
+}
+
