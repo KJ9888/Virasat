@@ -1,4 +1,4 @@
-// src/pages/SambhajiMaharajPage.jsx
+// src/pages/RamayanaPage.jsx
 import { motion } from "framer-motion";
 import Animation from "../components/Animation";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ const ImageDisplay = ({ imageUrl, altText }) => (
   </motion.div>
 );
 
-const SambhajiMaharajPage = () => {
+const RamayanaPage = () => {
   const navigate = useNavigate();
   const sectionVariant = {
     hidden: { opacity: 0, y: 40 },
@@ -32,7 +32,7 @@ const SambhajiMaharajPage = () => {
       {/* Back Button */}
       <motion.div
         className="absolute top-6 left-6 z-50"
-        whileHover={{ scale: 1.05, boxShadow: "0px 4px 15px rgba(255, 50, 0, 0.6)" }}
+        whileHover={{ scale: 1.05, boxShadow: "0px 4px 15px rgba(255, 165, 0, 0.6)" }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -40,8 +40,8 @@ const SambhajiMaharajPage = () => {
       >
         <button
           onClick={() => navigate(-1)}
-          className="relative text-red-400 font-semibold px-4 py-2 rounded transition-all duration-300
-            after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-red-400 after:transition-all after:duration-300
+          className="relative text-orange-400 font-semibold px-4 py-2 rounded transition-all duration-300
+            after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-orange-400 after:transition-all after:duration-300
             hover:after:w-full"
         >
           &larr; Back to Stories
@@ -67,12 +67,12 @@ const SambhajiMaharajPage = () => {
               visible: { opacity: 1, y: 0, transition: { duration: 1 } },
             }}
           >
-            <p className="text-lg text-red-500 font-semibold mb-2 tracking-wide uppercase">
-              The Brave Maratha King
+            <p className="text-lg text-orange-500 font-semibold mb-2 tracking-wide uppercase">
+              The Epic of Virtue and Valor
             </p>
-            <h1 className="font-serif text-5xl md:text-7xl font-extrabold text-red-400">
-              Chhatrapati Sambhaji Maharaj <br />
-              <span className="text-red-300">The Dharmaveer of Maratha Empire</span>
+            <h1 className="font-serif text-5xl md:text-7xl font-extrabold text-orange-400">
+              Ramayana <br />
+              <span className="text-orange-300">The Journey of Lord Rama</span>
             </h1>
           </motion.header>
 
@@ -86,7 +86,7 @@ const SambhajiMaharajPage = () => {
           >
             <div className="w-full md:w-4/5 aspect-video rounded-xl overflow-hidden shadow-2xl">
               <video
-                src="../../assets/sambhaji.mp4"  // Place your video in assets folder
+                src="../../assets/ramayana.mp4"
                 controls
                 autoPlay
                 muted
@@ -95,7 +95,7 @@ const SambhajiMaharajPage = () => {
             </div>
           </motion.section>
 
-          {/* Section 1: The Capture */}
+          {/* Section 1: Birth of Rama */}
           <motion.section
             className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24"
             initial="hidden"
@@ -104,20 +104,21 @@ const SambhajiMaharajPage = () => {
             variants={sectionVariant}
           >
             <div className="md:w-7/12 text-left">
-              <h2 className="font-serif text-4xl font-bold text-red-500 mb-4 pb-2 border-b-2 border-red-700">
-                The Capture
+              <h2 className="font-serif text-4xl font-bold text-orange-500 mb-4 pb-2 border-b-2 border-orange-700">
+                Birth of Rama
               </h2>
               <p className="text-lg leading-relaxed">
-                In February 1689, the course of Maratha history was forever altered. Chhatrapati Sambhaji Maharaj, through an act of betrayal, was captured by Mughal forces at Sangameshwar. He was brought in chains to the camp of Emperor Aurangzeb, the man who had spent nearly a decade trying, and failing, to conquer his kingdom.
+                Lord Rama, the prince of Ayodhya, was born to King Dasharatha and Queen Kaushalya.
+                He was the embodiment of dharma, virtue, and righteousness, destined to face challenges and protect the world from evil.
               </p>
             </div>
             <ImageDisplay
-              imageUrl="https://akm-img-a-in.tosshub.com/indiatoday/images/story/202502/shivajis-daring-agra-escape-that-humiliated-aurangzeb-and-cemented-maratha-legacy-195653427-16x9_0.jpg?VersionId=YTGQ.e0gJi7fiwqcVH2XkYqr2HHU5lgj"
-              altText="A portrait of Chhatrapati Sambhaji Maharaj"
+              imageUrl="https://upload.wikimedia.org/wikipedia/commons/3/34/Birth_of_Lord_Rama.jpg"
+              altText="Birth of Lord Rama"
             />
           </motion.section>
 
-          {/* Section 2: The Emperor's Offer */}
+          {/* Section 2: Exile and Forest Life */}
           <motion.section
             className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16 mb-16 md:mb-24"
             initial="hidden"
@@ -126,25 +127,21 @@ const SambhajiMaharajPage = () => {
             variants={sectionVariant}
           >
             <div className="md:w-7/12 text-right">
-              <h2 className="font-serif text-4xl font-bold text-red-500 mb-4 pb-2 border-b-2 border-red-700 inline-block">
-                The Emperor's Offer
+              <h2 className="font-serif text-4xl font-bold text-orange-500 mb-4 pb-2 border-b-2 border-orange-700 inline-block">
+                Exile and Forest Life
               </h2>
-              <p className="text-lg leading-relaxed mb-4">
-                Brought before the mighty emperor, Sambhaji Maharaj was not a broken man. He stood with the pride of a king, his eyes reflecting an unbroken spirit. Aurangzeb made him an offer, believing he could finally break the Maratha will. The terms were clear:
+              <p className="text-lg leading-relaxed">
+                Due to palace intrigues, Rama was exiled for 14 years along with his wife Sita and brother Lakshmana.
+                In the forest, they faced numerous challenges, showcasing devotion, courage, and moral integrity.
               </p>
-              <ul className="text-lg leading-relaxed list-disc list-inside text-right space-y-2">
-                <li>Surrender all your forts.</li>
-                <li>Reveal the location of your hidden treasures.</li>
-                <li>Renounce your Hindu faith and convert to Islam.</li>
-              </ul>
             </div>
             <ImageDisplay
-              imageUrl="https://media.assettype.com/dharmadispatch%2F2025-02-23%2F44z5gq43%2Fsambhajibattle.jpg?rect=124%2C0%2C896%2C504"
-              altText="An illustration of the opulent Mughal court of Emperor Aurangzeb"
+              imageUrl="https://upload.wikimedia.org/wikipedia/commons/1/1d/Rama_Lakshmana_exile.jpg"
+              altText="Rama, Sita, and Lakshmana in exile"
             />
           </motion.section>
 
-          {/* Section 3: The Defiance */}
+          {/* Section 3: The Abduction of Sita */}
           <motion.section
             className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24"
             initial="hidden"
@@ -153,20 +150,21 @@ const SambhajiMaharajPage = () => {
             variants={sectionVariant}
           >
             <div className="md:w-7/12 text-left">
-              <h2 className="font-serif text-4xl font-bold text-red-500 mb-4 pb-2 border-b-2 border-red-700">
-                Absolute Defiance
+              <h2 className="font-serif text-4xl font-bold text-orange-500 mb-4 pb-2 border-b-2 border-orange-700">
+                The Abduction of Sita
               </h2>
               <p className="text-lg leading-relaxed">
-                To a lesser man, this would have been a lifeline. For Sambhaji Maharaj, it was an insult. He looked at the emperor and scornfully rejected the offer. Legends say his reply was filled with such fearless contempt that it stunned the entire Mughal court. He made it clear that he would choose a thousand deaths over a life of dishonor and abandoning his Dharma. He declared that the Maratha spirit of freedom was not for sale.
+                Sita was abducted by the demon king Ravana, leading Rama to forge alliances and prepare for a monumental battle to rescue her.
+                This event highlights the themes of devotion, bravery, and justice central to the Ramayana.
               </p>
             </div>
             <ImageDisplay
-              imageUrl="https://images.news18.com/ibnlive/uploads/2022/05/chhatrapati-sambhaji-raje-birth-anniversary.jpg"
-              altText="A strong Maratha hill fort, symbolizing resistance and Swarajya"
+              imageUrl="https://upload.wikimedia.org/wikipedia/commons/7/7b/Sita_abduction.jpg"
+              altText="Ravana abducting Sita"
             />
           </motion.section>
 
-          {/* Section 4: The Legacy */}
+          {/* Section 4: The Battle of Lanka */}
           <motion.section
             className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16"
             initial="hidden"
@@ -175,16 +173,17 @@ const SambhajiMaharajPage = () => {
             variants={sectionVariant}
           >
             <div className="md:w-7/12 text-right">
-              <h2 className="font-serif text-4xl font-bold text-red-500 mb-4 pb-2 border-b-2 border-red-700 inline-block">
-                The Dharmaveer's Sacrifice
+              <h2 className="font-serif text-4xl font-bold text-orange-500 mb-4 pb-2 border-b-2 border-orange-700 inline-block">
+                The Battle of Lanka
               </h2>
               <p className="text-lg leading-relaxed">
-                Enraged by this absolute defiance, Aurangzeb ordered a brutal execution. Yet, through unimaginable pain, Sambhaji Maharaj never relented. His refusal to bow down, even in the face of certain death, was his final act of resistance. His sacrifice did not crush the Marathas; it ignited a fire of vengeance and unity that ultimately consumed Mughal ambitions. This single, powerful act is why he is remembered as Dharmaveer—the valiant protector of righteousness.
+                Rama, with the help of Hanuman and the Vanara army, fought the fierce battle against Ravana in Lanka.
+                Victory was achieved through dharma, courage, and righteousness, restoring balance and exemplifying ideal conduct.
               </p>
             </div>
             <ImageDisplay
-              imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcosohje7EpgC7tamRhOEtTaH5Ru2hWLnRHg&s"
-              altText="The saffron Maratha flag (Bhagwa Dhwaj) flying proudly"
+              imageUrl="https://upload.wikimedia.org/wikipedia/commons/0/0a/Battle_of_Lanka.jpg"
+              altText="The battle between Rama and Ravana"
             />
           </motion.section>
 
@@ -194,4 +193,4 @@ const SambhajiMaharajPage = () => {
   );
 };
 
-export default SambhajiMaharajPage;
+export default RamayanaPage;

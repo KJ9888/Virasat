@@ -1,7 +1,7 @@
 
 import { motion } from "framer-motion";
 import Animation from "../components/Animation";
-import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
 
 // Image Display Component
 const ImageDisplay = ({ imageUrl, altText }) => (
@@ -13,7 +13,7 @@ const ImageDisplay = ({ imageUrl, altText }) => (
     transition={{ duration: 0.8 }}
   >
     <img
-      src={imageUrl}
+      src={imageUrl}  
       alt={altText}
       className="w-full h-72 md:h-80 lg:h-96 object-cover object-center"
     />
@@ -21,6 +21,7 @@ const ImageDisplay = ({ imageUrl, altText }) => (
 );
 
 const TajMahalPage = () => {
+  const navigate = useNavigate();
   const sectionVariant = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
@@ -28,12 +29,27 @@ const TajMahalPage = () => {
 
   return (
     <>
-    <Header />
+    {/* Back Button on Top-Left */}
+      <motion.div
+      className="absolute top-6 left-6 z-50 "
+      whileHover={{ scale: 1.05, boxShadow: "0px 4px 15px rgba(255, 200, 0, 0.6)" }}
+      whileTap={{ scale: 0.95 }}
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
+      <button
+        onClick={() => navigate(-1)}
+        className="relative text-amber-400 font-semibold px-4 py-2 rounded transition-all duration-300 after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-amber-400 after:transition-all after:duration-300 hover:after:w-full"
+      >
+        &larr; Back to Monuments
+      </button>
+    </motion.div>
     <div className="fixed top-0 fixed inset-0 -z-10 ">
       <Animation/>
     </div>
     
-    <main className=" font-sans text-gray-300 py-12 md:py-20">
+    <main className=" font-sans text-gray-300 pt-24 md:pt-28 py-12 md:py-20">
       <article className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <motion.header

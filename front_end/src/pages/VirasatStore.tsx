@@ -121,9 +121,7 @@ const VirasatStore = () => {
 
   return (
     <>
-      <div className="fixed top-0 fixed inset-0 z-10 ">
-      <Animation/>
-    </div>
+      <Animation />
       <motion.div className="min-h-screen bg-[#111] text-white">
         <Header />
 

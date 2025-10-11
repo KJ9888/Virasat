@@ -1,119 +1,196 @@
-import React from 'react';
+// src/pages/KhalsaBirthPage.jsx
+import { motion } from "framer-motion";
+import Animation from "../components/Animation";
+import { useNavigate } from "react-router-dom";
 
-// Define the types for the props
-interface ImageDisplayProps {
-  imageUrl: string; 
-  altText: string;
-}
-
-// Reusable component for displaying an image
-const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageUrl, altText }) => (
-  <div className="w-full md:w-5/12">
+// Image Display Component
+const ImageDisplay = ({ imageUrl, altText }) => (
+  <motion.div
+    className="w-full md:w-5/12 overflow-hidden rounded-xl shadow-xl transform transition-transform duration-500 hover:scale-105"
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.8 }}
+  >
     <img
       src={imageUrl}
       alt={altText}
-      className="w-full h-72 object-cover rounded-lg shadow-md"
+      className="w-full h-72 md:h-80 lg:h-96 object-cover object-center"
     />
-  </div>
+  </motion.div>
 );
 
-// Main component for the page
-const KhalsaBirthPage: React.FC = () => {
+const KhalsaBirthPage = () => {
+  const navigate = useNavigate();
+  const sectionVariant = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
   return (
-    <main className="bg-white font-sans text-gray-800 py-12 md:py-20">
-      <article className="max-w-6xl mx-auto px-6">
-        <header className="text-center mb-16 md:mb-24">
-          <p className="text-lg text-red-700 font-semibold mb-2">VAISAKHI, 1699</p>
-          <h1 className="font-serif text-5xl md:text-7xl font-extrabold text-gray-900">
-            The Birth of the Khalsa: <span className="text-red-800">A Test of Courage and Faith</span>
-          </h1>
-        </header>
+    <>
+      {/* Back Button */}
+      <motion.div
+        className="absolute top-6 left-6 z-50"
+        whileHover={{ scale: 1.05, boxShadow: "0px 4px 15px rgba(0, 150, 255, 0.6)" }}
+        whileTap={{ scale: 0.95 }}
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
+        <button
+          onClick={() => navigate(-1)}
+          className="relative text-blue-400 font-semibold px-4 py-2 rounded transition-all duration-300
+            after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-blue-400 after:transition-all after:duration-300
+            hover:after:w-full"
+        >
+          &larr; Back to Stories
+        </button>
+      </motion.div>
 
-        {/* Section 1 */}
-        <section className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24">
-          <div className="md:w-7/12 text-left">
-            <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-red-200">The Guru's Demand</h2>
-            <p className="text-lg leading-relaxed">
-              In 1699, at the Baisakhi gathering in Anandpur Sahib, Guru Gobind Singh knew his followers needed to be transformed...
-            </p>
-          </div>
-          <ImageDisplay
-            imageUrl="https://your-image-link.com/guru-gobind-singh-sword.jpg"
-            altText="An artistic depiction of Guru Gobind Singh with his sword raised"
-          />
-        </section>
+      {/* Background Animation */}
+      <div className="fixed inset-0 -z-10">
+        <Animation />
+      </div>
 
-        {/* Section 2 */}
-        <section className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16 mb-16 md:mb-24">
-          <div className="md:w-7/12 text-right">
-            <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-red-200 inline-block">A Test of Faith</h2>
-            <p className="text-lg leading-relaxed">
-              A deathly silence fell. After the Guru's repeated demand, a humble shopkeeper named Daya Ram stood...
-            </p>
-          </div>
-          <ImageDisplay
-            imageUrl="https://your-image-link.com/sikh-volunteer.jpg"
-            altText="A symbolic image of a Sikh volunteer showing unwavering faith"
-          />
-        </section>
-        
-        {/* Section 3 */}
-        <section className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24">
-          <div className="md:w-7/12 text-left">
-            <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-red-200">Four More Souls</h2>
-            <p className="text-lg leading-relaxed">
-              Though the crowd was paralyzed with terror, four more brave souls...
-            </p>
-          </div>
-          <ImageDisplay
-            imageUrl="https://your-image-link.com/panj-pyare-diverse.jpg"
-            altText="An artistic representation of the five men from different castes stepping forward"
-          />
-        </section>
+      <main className="font-sans text-gray-300 pt-24 md:pt-28 py-12 md:py-20">
+        <article className="max-w-6xl mx-auto px-6">
 
-        {/* Section 4 */}
-        <section className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16 mb-16 md:mb-24">
-          <div className="md:w-7/12 text-right">
-            <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-red-200 inline-block">The Five Beloved Ones</h2>
-            <p className="text-lg leading-relaxed">
-              After the fifth man vanished, the Guru emerged with all five men, alive, unharmed...
+          {/* Header */}
+          <motion.header
+            className="text-center mb-16 md:mb-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0, y: -20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+            }}
+          >
+            <p className="text-lg text-blue-500 font-semibold mb-2 tracking-wide uppercase">
+              The Birth of the Khalsa
             </p>
-          </div>
-          <ImageDisplay
-            imageUrl="https://your-image-link.com/panj-pyare-reborn.jpg"
-            altText="The Panj Pyare (Five Beloved Ones) standing together, reborn and dressed majestically"
-          />
-        </section>
+            <h1 className="font-serif text-5xl md:text-7xl font-extrabold text-blue-400">
+              Khalsa <br />
+              <span className="text-blue-300">The Warrior Spirit of Sikhism</span>
+            </h1>
+          </motion.header>
 
-        {/* Section 5 */}
-        <section className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24">
-          <div className="md:w-7/12 text-left">
-            <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-red-200">The Nectar of Immortality</h2>
-            <p className="text-lg leading-relaxed">
-              The Guru then initiated them into a new order. Mixing sugar into water with his double-edged sword...
-            </p>
-          </div>
-          <ImageDisplay
-            imageUrl="https://your-image-link.com/preparing-amrit.jpg"
-            altText="A depiction of the preparation of Amrit with a double-edged sword (Khanda)"
-          />
-        </section>
+          {/* Cinematic Video */}
+          <motion.section
+            className="mb-16 md:mb-24 w-full flex justify-center"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="w-full md:w-4/5 aspect-video rounded-xl overflow-hidden shadow-2xl">
+              <video
+                src="../../assets/khalsa.mp4"
+                controls
+                autoPlay
+                muted
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.section>
 
-        {/* Section 6 */}
-        <section className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16">
-          <div className="md:w-7/12 text-right">
-            <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-red-200 inline-block">A Revolutionary Act</h2>
-            <p className="text-lg leading-relaxed">
-              In a revolutionary act that shattered all hierarchy, the Guru then knelt before the Panj Pyare...
-            </p>
-          </div>
-          <ImageDisplay
-            imageUrl="https://your-image-link.com/guru-as-disciple.jpg"
-            altText="An image symbolizing the profound equality of the Khalsa"
-          />
-        </section>
-      </article>
-    </main>
+          {/* Section 1: Historical Context */}
+          <motion.section
+            className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={sectionVariant}
+          >
+            <div className="md:w-7/12 text-left">
+              <h2 className="font-serif text-4xl font-bold text-blue-500 mb-4 pb-2 border-b-2 border-blue-700">
+                The Need for Khalsa
+              </h2>
+              <p className="text-lg leading-relaxed">
+                In 1699, Guru Gobind Singh, the tenth Sikh Guru, created the Khalsa to defend righteousness and protect the oppressed.
+                The Khalsa symbolized courage, devotion, and equality. This historic formation marked a transformation in Sikh identity and spiritual strength.
+              </p>
+            </div>
+            <ImageDisplay
+              imageUrl="https://upload.wikimedia.org/wikipedia/commons/7/7e/Guru_Gobind_Singh_portrait.jpg"
+              altText="Portrait of Guru Gobind Singh"
+            />
+          </motion.section>
+
+          {/* Section 2: The Vaisakhi Ceremony */}
+          <motion.section
+            className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16 mb-16 md:mb-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={sectionVariant}
+          >
+            <div className="md:w-7/12 text-right">
+              <h2 className="font-serif text-4xl font-bold text-blue-500 mb-4 pb-2 border-b-2 border-blue-700 inline-block">
+                The Vaisakhi Ceremony
+              </h2>
+              <p className="text-lg leading-relaxed">
+                On Vaisakhi day, Guru Gobind Singh initiated the first Khalsa by baptizing five beloved Sikhs, the Panj Pyare,
+                with Amrit (holy nectar). This ceremony established the code of conduct, the five Ks, and a warrior spirit devoted to dharma.
+              </p>
+            </div>
+            <ImageDisplay
+              imageUrl="https://upload.wikimedia.org/wikipedia/commons/0/0e/Panj_Pyare_initiation.jpg"
+              altText="Depiction of the Panj Pyare initiation ceremony"
+            />
+          </motion.section>
+
+          {/* Section 3: The Khalsa Code */}
+          <motion.section
+            className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={sectionVariant}
+          >
+            <div className="md:w-7/12 text-left">
+              <h2 className="font-serif text-4xl font-bold text-blue-500 mb-4 pb-2 border-b-2 border-blue-700">
+                The Khalsa Code
+              </h2>
+              <p className="text-lg leading-relaxed">
+                The Khalsa adopted a strict code of conduct emphasizing equality, courage, and devotion.
+                The five Ks (Kesh, Kara, Kanga, Kacchera, Kirpan) became symbols of identity, commitment, and readiness to defend righteousness.
+              </p>
+            </div>
+            <ImageDisplay
+              imageUrl="https://upload.wikimedia.org/wikipedia/commons/9/96/Khalsa_initiation.png"
+              altText="Artistic depiction of Khalsa initiation"
+            />
+          </motion.section>
+
+          {/* Section 4: Legacy */}
+          <motion.section
+            className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={sectionVariant}
+          >
+            <div className="md:w-7/12 text-right">
+              <h2 className="font-serif text-4xl font-bold text-blue-500 mb-4 pb-2 border-b-2 border-blue-700 inline-block">
+                A Lasting Legacy
+              </h2>
+              <p className="text-lg leading-relaxed">
+                The Khalsa continues to inspire Sikhs worldwide. Their courage, discipline, and commitment to dharma remain guiding principles.
+                From selfless service to defending justice, the Khalsa embodies the warrior spirit and spiritual devotion envisioned by Guru Gobind Singh.
+              </p>
+            </div>
+            <ImageDisplay
+              imageUrl="https://upload.wikimedia.org/wikipedia/commons/2/2d/Khalsa_Warriors.jpg"
+              altText="Modern depiction of Khalsa warriors"
+            />
+          </motion.section>
+
+        </article>
+      </main>
+    </>
   );
 };
+
 export default KhalsaBirthPage;

@@ -1,107 +1,194 @@
-// src/pages/MaharanaPratapPage.tsx
+// src/pages/MaharanaPratapPage.jsx
+import { motion } from "framer-motion";
+import Animation from "../components/Animation";
+import { useNavigate } from "react-router-dom";
 
-import React from 'react';
-
-// Reusable component for displaying an image
-interface ImageDisplayProps {
-  imageUrl: string; 
-  altText: string;
-}
-
-const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageUrl, altText }) => (
-  <div className="w-full md:w-5/12">
+// Image Display Component
+const ImageDisplay = ({ imageUrl, altText }) => (
+  <motion.div
+    className="w-full md:w-5/12 overflow-hidden rounded-xl shadow-xl transform transition-transform duration-500 hover:scale-105"
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.8 }}
+  >
     <img
       src={imageUrl}
       alt={altText}
-      className="w-full h-72 object-cover rounded-lg shadow-md"
+      className="w-full h-72 md:h-80 lg:h-96 object-cover object-center"
     />
-  </div>
+  </motion.div>
 );
 
-const MaharanaPratapPage: React.FC = () => {
+const MaharanaPratapPage = () => {
+  const navigate = useNavigate();
+  const sectionVariant = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
   return (
-    <main className="bg-white font-sans text-gray-800 py-12 md:py-20">
-      <article className="max-w-6xl mx-auto px-6">
+    <>
+      {/* Back Button */}
+      <motion.div
+        className="absolute top-6 left-6 z-50"
+        whileHover={{ scale: 1.05, boxShadow: "0px 4px 15px rgba(255, 150, 0, 0.6)" }}
+        whileTap={{ scale: 0.95 }}
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
+        <button
+          onClick={() => navigate(-1)}
+          className="relative text-yellow-400 font-semibold px-4 py-2 rounded transition-all duration-300
+            after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-yellow-400 after:transition-all after:duration-300
+            hover:after:w-full"
+        >
+          &larr; Back to Stories
+        </button>
+      </motion.div>
 
-        <header className="text-center mb-16 md:mb-24">
-          <p className="text-lg text-red-700 font-semibold mb-2">THE LION OF MEWAR</p>
-          <h1 className="font-serif text-5xl md:text-7xl font-extrabold text-gray-900">
-            Maharana Pratap: <span className="text-red-800">The King Who Never Bowed</span>
-          </h1>
-        </header>
+      {/* Background Animation */}
+      <div className="fixed inset-0 -z-10">
+        <Animation />
+      </div>
 
-        {/* -- Section 1: Defiance Against Akbar -- */}
-        <section className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24">
-          <div className="md:w-7/12 text-left">
-            <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-red-200">The Unyielding Spirit of Mewar</h2>
-            <p className="text-lg leading-relaxed">
-              In the 16th century, while the Mughal Emperor Akbar expanded his dominion, Maharana Pratap of Mewar stood alone. He fiercely guarded Mewar's independence, refusing Akbar's offers and choosing a life of relentless struggle over vassalage. This unwavering resolve set the stage for an epic confrontation.
+      <main className="font-sans text-gray-300 pt-24 md:pt-28 py-12 md:py-20">
+        <article className="max-w-6xl mx-auto px-6">
+
+          {/* Header */}
+          <motion.header
+            className="text-center mb-16 md:mb-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0, y: -20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+            }}
+          >
+            <p className="text-lg text-yellow-500 font-semibold mb-2 tracking-wide uppercase">
+              The Lion of Mewar
             </p>
-          </div>
-          <ImageDisplay
-            imageUrl="https://upload.wikimedia.org/wikipedia/commons/5/5e/Maharana_Pratap.jpg"
-            altText="A majestic portrait of Maharana Pratap, symbolizing his defiant spirit"
-          />
-        </section>
+            <h1 className="font-serif text-5xl md:text-7xl font-extrabold text-yellow-400">
+              Maharana Pratap <br />
+              <span className="text-amber-300">The Brave Rajput King of Mewar</span>
+            </h1>
+          </motion.header>
 
-        {/* -- Section 2: The Battle of Haldighati -- */}
-        <section className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16 mb-16 md:mb-24">
-          <div className="md:w-7/12 text-right">
-            <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-red-200 inline-block">Haldighati: The Famed Pass</h2>
-            <p className="text-lg leading-relaxed">
-              In 1576, Akbar's formidable army, led by Man Singh, converged on Pratap's forces at the narrow mountain pass of Haldighati. Though vastly outnumbered, Pratap's Mewari army fought with unmatched courage. Maharana Pratap, astride his legendary horse Chetak, carved a path through enemy ranks, directly engaging Man Singh.
-            </p>
-          </div>
-          <ImageDisplay
-            imageUrl="https://upload.wikimedia.org/wikipedia/commons/2/26/Battle_of_Haldighati_illustration.jpg"
-            altText="An intense artistic depiction of the Battle of Haldighati, showing Maharana Pratap on Chetak"
-          />
-        </section>
-        
-        {/* -- Section 3: Chetak's Sacrifice -- */}
-        <section className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24">
-          <div className="md:w-7/12 text-left">
-            <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-red-200">Chetak's Heroic Leap</h2>
-            <p className="text-lg leading-relaxed">
-              As the battle turned, Maharana Pratap was wounded and his army on the brink. His loyal steed, Chetak, severely injured, galloped away, pursued by Mughals. Facing a wide ravine, Chetak, in a final act of devotion, made an impossible leap to carry his master to safety before succumbing to his wounds. The loss deeply grieved the Maharana.
-            </p>
-          </div>
-          <ImageDisplay
-            imageUrl="https://upload.wikimedia.org/wikipedia/commons/3/34/Chetak_Horse_Leap.jpg"
-            altText="An artistic representation of Chetak making a heroic leap across a chasm"
-          />
-        </section>
+          {/* Cinematic Video */}
+          <motion.section
+            className="mb-16 md:mb-24 w-full flex justify-center"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="w-full md:w-4/5 aspect-video rounded-xl overflow-hidden shadow-2xl">
+              <video
+                src="../../assets/maharana_pratap.mp4"
+                controls
+                autoPlay
+                muted
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.section>
 
-        {/* -- Section 4: The Unconquered Spirit -- */}
-        <section className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16 mb-16 md:mb-24">
-          <div className="md:w-7/12 text-right">
-            <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-red-200 inline-block">Guerrilla Warfare and Resolve</h2>
-            <p className="text-lg leading-relaxed">
-              Though Haldighati was a tactical defeat, Maharana Pratap never surrendered the war for freedom. He retreated to the rugged Aravalli hills, waging a relentless guerrilla war against the Mughals. He lived a life of hardship, vowing to forgo comfort until Chittor was reclaimed, inspiring his people with his unwavering resolve.
-            </p>
-          </div>
-          <ImageDisplay
-            imageUrl="https://upload.wikimedia.org/wikipedia/commons/a/a0/Aravalli_Hills.jpg"
-            altText="The rugged and majestic Aravalli hills, symbolizing Maharana Pratap's hideout"
-          />
-        </section>
+          {/* Section 1: Early Life */}
+          <motion.section
+            className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={sectionVariant}
+          >
+            <div className="md:w-7/12 text-left">
+              <h2 className="font-serif text-4xl font-bold text-yellow-500 mb-4 pb-2 border-b-2 border-yellow-700">
+                Early Life
+              </h2>
+              <p className="text-lg leading-relaxed">
+                Born in 1540 in Kumbhalgarh, Maharana Pratap grew up learning the art of warfare and administration.
+                From childhood, he was trained to protect Mewar’s sovereignty and uphold Rajput honor against invaders.
+              </p>
+            </div>
+            <ImageDisplay
+              imageUrl="https://upload.wikimedia.org/wikipedia/commons/2/25/Maharana_Pratap_portrait.jpg"
+              altText="Portrait of young Maharana Pratap"
+            />
+          </motion.section>
 
-        {/* -- Section 5: Legacy -- */}
-        <section className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
-          <div className="md:w-7/12 text-left">
-            <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-red-200">Immortal Symbol of Courage</h2>
-            <p className="text-lg leading-relaxed">
-              Maharana Pratap's enduring struggle and immense personal sacrifices have cemented his place in history as an immortal symbol of courage, patriotism, and the unyielding fight for freedom against all odds. His legacy continues to inspire generations.
-            </p>
-          </div>
-          <ImageDisplay
-            imageUrl="https://upload.wikimedia.org/wikipedia/commons/6/6f/Akbar_Court_Art.jpg"
-            altText="A depiction of the grand Mughal court, contrasting with Pratap's defiance"
-          />
-        </section>
+          {/* Section 2: The Battle of Haldighati */}
+          <motion.section
+            className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16 mb-16 md:mb-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={sectionVariant}
+          >
+            <div className="md:w-7/12 text-right">
+              <h2 className="font-serif text-4xl font-bold text-yellow-500 mb-4 pb-2 border-b-2 border-yellow-700 inline-block">
+                The Battle of Haldighati
+              </h2>
+              <p className="text-lg leading-relaxed">
+                In 1576, Maharana Pratap faced the Mughal army led by Akbar at Haldighati.
+                Despite being outnumbered, he displayed unmatched valor and strategy, earning a legendary status in Indian history.
+              </p>
+            </div>
+            <ImageDisplay
+              imageUrl="https://upload.wikimedia.org/wikipedia/commons/0/0e/Battle_of_Haldighati.jpg"
+              altText="Depiction of the Battle of Haldighati"
+            />
+          </motion.section>
 
-      </article>
-    </main>
+          {/* Section 3: Guerilla Warfare */}
+          <motion.section
+            className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={sectionVariant}
+          >
+            <div className="md:w-7/12 text-left">
+              <h2 className="font-serif text-4xl font-bold text-yellow-500 mb-4 pb-2 border-b-2 border-yellow-700">
+                Guerilla Warfare
+              </h2>
+              <p className="text-lg leading-relaxed">
+                After Haldighati, Maharana Pratap used guerrilla tactics to resist Mughal forces, 
+                striking from the forests and hills of Mewar, keeping the spirit of independence alive.
+              </p>
+            </div>
+            <ImageDisplay
+              imageUrl="https://upload.wikimedia.org/wikipedia/commons/1/18/Maharana_Pratap_guerrilla.jpg"
+              altText="Maharana Pratap's guerrilla attacks"
+            />
+          </motion.section>
+
+          {/* Section 4: Legacy */}
+          <motion.section
+            className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={sectionVariant}
+          >
+            <div className="md:w-7/12 text-right">
+              <h2 className="font-serif text-4xl font-bold text-yellow-500 mb-4 pb-2 border-b-2 border-yellow-700 inline-block">
+                An Eternal Legacy
+              </h2>
+              <p className="text-lg leading-relaxed">
+                Maharana Pratap remains a symbol of bravery, honor, and resistance. His life inspires generations to uphold courage, dignity, and love for their homeland.
+              </p>
+            </div>
+            <ImageDisplay
+              imageUrl="https://upload.wikimedia.org/wikipedia/commons/d/dc/Maharana_Pratap_statue.jpg"
+              altText="Statue of Maharana Pratap"
+            />
+          </motion.section>
+
+        </article>
+      </main>
+    </>
   );
 };
 

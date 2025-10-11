@@ -49,7 +49,7 @@ const monumentsData = [
   {
     id: 'india-gate',
     name: 'India Gate',
-    description: 'A war memorial located in New Delhi.',
+    description: 'India Gate in New Delhi honors soldiers who died in World War I.',
     imageUrl: 'https://imgs.search.brave.com/x99A2ts2xHO8Ux9G6c4wStBMseHXKzMsYFqZpvUcp5A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zN2Fw/MS5zY2VuZTcuY29t/L2lzL2ltYWdlL2lu/Y3JlZGlibGVpbmRp/YS9pbmRpYS1nYXRl/LWRlbGhpLTUtYXR0/ci1oZXJvP3FsdD04/MiZ0cz0xNzQyMTcw/MjQwMTMx',
     path: '/monuments/india-gate'
   },

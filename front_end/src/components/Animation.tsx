@@ -12,11 +12,10 @@ const Animation: React.FC = () => (
       className="fixed top-0 left-0 w-[200%] h-full opacity-300 z-10"
       aria-hidden="true"
       style={{
-      
         
         backgroundImage:
           "url('https://www.transparenttextures.com/patterns/stardust.png')",
-        animation: "pan-stars 60s linear infinite",
+        animation: "pan-stars 120s linear infinite ",
         
         
       

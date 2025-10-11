@@ -54,14 +54,14 @@ const storiesData = [
     name: 'Guru-Granth Sahib',
     description: 'The holy scripture of Sikhism, containing hymns and writings of Sikh Gurus.',
     imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWn5UKzolSZW0b0B4VZBODI3U6QgaAp0PSuQ&s',
-    path: '/monuments/guru-granth-sahib'
+    path: '/stories/guru-granth-sahib'
   },
   {
     id: 'akbar-the-great',
     name: 'Akbar the Great',
     description: 'The Mughal emperor known for his policy of religious tolerance.',
     imageUrl: 'https://cards.algoreducation.com/_next/image?url=https%3A%2F%2Ffiles.algoreducation.com%2Fproduction-ts%2F__S3__6a253240-77e7-4fbb-aded-06732437ce40&w=3840&q=75',
-    path: '/monuments/akbar-the-great'
+    path: '/stories/akbar-the-great'
   }
 ];
 
