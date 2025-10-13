@@ -41,10 +41,13 @@ const TextType = ({
     return Math.random() * (max - min) + min;
   }, [variableSpeed, typingSpeed]);
 
-  const getCurrentTextColor = () => {
-    if (textColors.length === 0) return '#ffffff';
-    return textColors[currentTextIndex % textColors.length];
-  };
+ const getCurrentTextColor = () => {
+  if (!textColors || textColors.length === 0) {
+    return theme === "dark" ? "#FDE7A6" : "#222222"; // sensible defaults
+  }
+  return textColors[currentTextIndex % textColors.length];
+};
+
 
   useEffect(() => {
     if (!startOnVisible || !containerRef.current) return;

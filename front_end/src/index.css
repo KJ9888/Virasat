@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+
+/* Define a custom dark variant selector for v4+ projects */
+@custom-variant dark (&:where(.dark, .dark *));
+
+
 body {
   background-color: #0c0a09;
   color: white;

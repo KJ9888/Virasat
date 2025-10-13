@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence, MotionConfig } from "framer-motion";
+import { useNavigate } from "react-router-dom"; // NEW [web:18]
 
 type Mode = "login" | "signup";
 
@@ -154,6 +155,7 @@ const SuccessPanel = ({ open, name, onClose }: { open: boolean; name?: string; o
 };
 
 export default function AuthPage() {
+  const navigate = useNavigate(); // NEW [web:18]
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -189,6 +191,14 @@ export default function AuthPage() {
     await new Promise((r) => setTimeout(r, 900)); // simulate API
     setLoading(false);
     setOk(true);
+    // inside handleSubmit after setOk(true)
+navigate("/", {
+  replace: true,
+  state: {
+    toast: { type: "success", title: "Logged in", name },
+  },
+});
+
   };
 
   // Equal card heights: fix consistent min-h
@@ -204,6 +214,17 @@ export default function AuthPage() {
           font-[system-ui,ui-sans-serif,Segoe UI,Roboto,Inter,Helvetica,Arial]
         "
       >
+        {/* Top-left back button */}
+        <button
+          type="button"
+          onClick={() => navigate(-1)} // NEW [web:18]
+          className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full
+                     border border-amber-300/25 bg-white/5 px-3 py-1.5 text-amber-100
+                     hover:bg-white/10 hover:border-amber-300/40 transition"
+          aria-label="Go back"
+        >
+          ← Back
+        </button>
         {/* Ambient layers */}
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(120%_80%_at_50%_20%,rgba(255,204,128,0.12),rgba(0,0,0,0)_60%)]" />
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(120%_90%_at_50%_60%,rgba(0,0,0,0)_40%,rgba(0,0,0,0.55)_100%)]" />

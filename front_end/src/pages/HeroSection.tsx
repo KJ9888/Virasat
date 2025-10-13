@@ -1,8 +1,60 @@
 import { MotionConfig, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import TextType from "../components/TextType";
+import ThemeToggle from "../components/ThemeToggle";
+import { useEffect, useState } from "react";
+// ADD these imports
+import { useLocation, useNavigate } from "react-router-dom"; // for reading + clearing state [web:23]
 
-// IMAGE LINKS (use optimized local AVIF/WebP in production)
+// ADD this component near the top of the file (below helpers is fine)
+const ToastOnArrival = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const toast = (location.state as any)?.toast;
+
+  useEffect(() => {
+    if (!toast) return;
+    // Example: simple inline banner. Replace with your SuccessPanel if you prefer.
+    const timer = setTimeout(() => {
+      // Clear state so it doesn't reappear on refresh/back
+      navigate(location.pathname, { replace: true, state: null });
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, [toast, location.pathname, navigate]);
+
+  if (!toast) return null;
+
+  return (
+    <motion.div
+      initial={{ y: 40, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 40, opacity: 0 }}
+      transition={{ type: "spring", stiffness: 280, damping: 26 }}
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[70]
+                 w-[92%] max-w-md rounded-2xl border border-amber-300/30
+                 bg-[#151014]/95 backdrop-blur-md shadow-[0_10px_40px_rgba(0,0,0,0.45)]
+                 px-5 py-4 text-amber-100"
+      role="status"
+      aria-live="polite"
+    >
+      <div className="flex items-center gap-3">
+        <div className="h-10 w-10 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center">
+          <svg viewBox="0 0 24 24" className="h-6 w-6 text-emerald-300">
+            <path fill="currentColor" d="M9.0 16.2L4.8 12l1.4-1.4l2.8 2.8l8.6-8.6L19 6.2z" />
+          </svg>
+        </div>
+        <div className="flex-1">
+          <div className="font-semibold">{toast.title || "Success"}</div>
+          <div className="text-amber-200/85 text-sm">
+            Welcome {toast.name?.split(" ")[0] || "back"} — enjoy the journey through Virasat.
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+
 const IMAGE_LINKS = [
   { src: "https://upload.wikimedia.org/wikipedia/commons/d/da/Taj-Mahal.jpg", href: "/monuments/taj-mahal" },
   { src: "https://m.media-amazon.com/images/I/91odtfOhJ-L.jpg", href: "/stories/ramayana" },
@@ -12,11 +64,8 @@ const IMAGE_LINKS = [
   { src: "https://www.omaxe.com/blog/wp-content/uploads/2024/05/Investment-in-Delhi.jpg", href: "/union-territories/delhi" },
 ];
 
-const VISIBLE_COUNT = 6;              // density control
-// const ITEM_W_SM = 180;                // px
-// const ITEM_W_MD = 220;                // px
+const VISIBLE_COUNT = 6;
 
-// Parallax utility
 const ParallaxLayer = ({ speed = 0.1, className = "" }: { speed?: number; className?: string }) => {
   const { scrollY } = useScroll();
   const prefersReduced = useReducedMotion();
@@ -24,13 +73,11 @@ const ParallaxLayer = ({ speed = 0.1, className = "" }: { speed?: number; classN
   return <motion.div aria-hidden="true" style={{ y }} className={className} />;
 };
 
-// Single-row seamless carousel with fixed-width tiles
 const SingleRowCarousel = () => {
   const prefersReduced = useReducedMotion();
   const items = IMAGE_LINKS.slice(0, VISIBLE_COUNT);
-  const row = [...items, ...items]; // duplicate for seamless loop
+  const row = [...items, ...items];
 
-  // Static fallback for reduced motion
   if (prefersReduced) {
     return (
       <div className="mt-7 w-full max-w-[1200px] mx-auto overflow-hidden">
@@ -40,7 +87,7 @@ const SingleRowCarousel = () => {
               <img
                 src={src}
                 alt=""
-                className="h-40 md:h-48 w-[180px] md:w-[220px] object-cover rounded-2xl border border-amber-200/20 hover:opacity-95 transition"
+                className="h-40 md:h-48 w-[180px] md:w-[220px] object-cover rounded-2xl border border-[#DDD6C9] dark:border-amber-200/20 shadow-sm dark:shadow-none hover:opacity-95 transition"
                 loading="lazy"
               />
             </Link>
@@ -51,20 +98,14 @@ const SingleRowCarousel = () => {
   }
 
   return (
-    <div
-      className="
-        mt-8 w-full mx-auto select-none
-        max-w-[1100px] md:max-w-[1300px]
-        relative overflow-hidden
-      "
-    >
+    <div className="mt-8 w-full mx-auto select-none max-w-[1100px] md:max-w-[1300px] relative overflow-hidden">
       {/* Edge fade masks */}
-      <div className="pointer-events-none absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-[#0f0b09] to-transparent/0" />
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-[#0f0b09] to-transparent/0" />
+      <div className="pointer-events-none absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-[#E0DBD1] to-transparent/0 dark:from-[#0f0b09] dark:to-transparent/0" />
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-[#E0DBD1] to-transparent/0 dark:from-[#0f0b09] dark:to-transparent/0" />
 
       <motion.div
         className="flex gap-5 md:gap-6 will-change-transform"
-        animate={{ x: ["0%", "-50%"] }} // shift by one copy length
+        animate={{ x: ["0%", "-50%"] }}
         transition={{ ease: "linear", duration: 42, repeat: Infinity }}
         aria-label="Heritage image showcase"
       >
@@ -73,15 +114,11 @@ const SingleRowCarousel = () => {
             <motion.img
               src={src}
               alt=""
-              className="
-                h-40 md:h-48
-                w-[180px] md:w-[220px]
-                rounded-2xl border border-amber-200/20 object-cover
-              "
+              className="h-40 md:h-48 w-[180px] md:w-[220px] rounded-2xl object-cover border border-[#DDD6C9] dark:border-amber-200/20 shadow-sm dark:shadow-none"
               whileHover={{ scale: 1.04 }}
               draggable={false}
               loading="lazy"
-              fetchpriority={i === 0 ? "high" : "auto" as any}
+              fetchPriority={i === 0 ? "high" : "auto" as any}
             />
             <div className="pointer-events-none absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/15 transition" />
           </Link>
@@ -91,7 +128,6 @@ const SingleRowCarousel = () => {
   );
 };
 
-// Magnetic hover CTA
 const MagneticButton = ({ children, className = "", ...props }: any) => {
   return (
     <motion.button
@@ -104,13 +140,7 @@ const MagneticButton = ({ children, className = "", ...props }: any) => {
         target.style.setProperty("--mx", `${x}px`);
         target.style.setProperty("--my", `${y}px`);
       }}
-      className={`
-        relative overflow-hidden
-        before:absolute before:inset-0
-        before:bg-[radial-gradient(200px_circle_at_var(--mx)_var(--my),rgba(255,220,150,0.18),transparent_60%)]
-        before:opacity-0 hover:before:opacity-100 before:transition-opacity
-        ${className}
-      `}
+      className={`relative overflow-hidden before:absolute before:inset-0 before:bg-[radial-gradient(200px_circle_at_var(--mx)_var(--my),rgba(255,220,150,0.18),transparent_60%)] before:opacity-0 hover:before:opacity-100 before:transition-opacity ${className}`}
       {...props}
     >
       {children}
@@ -118,23 +148,50 @@ const MagneticButton = ({ children, className = "", ...props }: any) => {
   );
 };
 
+
+
 const HeroSection = () => {
+  const [theme, setTheme] = useState<"light" | "dark">(() =>
+    typeof document !== "undefined" && document.documentElement.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
+
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === "theme") setTheme(e.newValue === "dark" ? "dark" : "light");
+    };
+    window.addEventListener("storage", onStorage);
+
+    const onClassChange = () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      setTheme(isDark ? "dark" : "light");
+    };
+    const mo = new MutationObserver(onClassChange);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      mo.disconnect();
+    };
+  }, []);
   return (
     <MotionConfig reducedMotion="user">
+      <ToastOnArrival /> {/* NEW: toast component to show messages on arrival */}
       <header
         id="home"
         aria-label="Virasat — Bharat ki Amar Dharohar"
         className="
           relative min-h-[100svh] flex flex-col justify-center items-center text-center
           px-6 md:px-10 overflow-hidden
-          bg-gradient-to-b from-[#0b0b12] via-[#14111d] to-[#0f0907]
+          bg-[#FFF9E6] text-[#4e342e]
+          dark:bg-gradient-to-b dark:from-[#0b0b12] dark:via-[#14111d] dark:to-[#0f0907] dark:text-amber-100/95
         "
       >
         {/* Edge vignette */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 pointer-events-none
-                     bg-[radial-gradient(120%_80%_at_50%_50%,rgba(0,0,0,0)_38%,rgba(0,0,0,0.5)_100%)]"
+          className="absolute inset-0 pointer-events-none bg-[radial-gradient(120%_80%_at_50%_50%,rgba(0,0,0,0)_38%,rgba(0,0,0,0.5)_100%)]"
         />
 
         {/* Subtle parchment + warm glow */}
@@ -144,28 +201,23 @@ const HeroSection = () => {
         />
         <ParallaxLayer
           speed={0.12}
-          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[120vmin] h-[120vmin] rounded-full
-                     bg-[radial-gradient(ellipse_at_center,rgba(255,204,128,0.15),rgba(0,0,0,0))]
-                     blur-2xl pointer-events-none"
+          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[120vmin] h-[120vmin] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,204,128,0.15),rgba(0,0,0,0))] blur-2xl pointer-events-none"
         />
 
         {/* Side ornaments */}
         <div
           aria-hidden="true"
-          className="hidden md:block absolute left-4 top-1/2 -translate-y-1/2 h-44 w-1 rounded-full
-                     bg-gradient-to-b from-amber-200/40 via-amber-300/0 to-amber-200/40"
+          className="hidden md:block absolute left-4 top-1/2 -translate-y-1/2 h-44 w-1 rounded-full bg-gradient-to-b from-amber-200/40 via-transparent to-amber-200/40 dark:via-amber-300/0"
         />
         <div
           aria-hidden="true"
-          className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 h-44 w-1 rounded-full
-                     bg-gradient-to-b from-amber-200/40 via-amber-300/0 to-amber-200/40"
+          className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 h-44 w-1 rounded-full bg-gradient-to-b from-amber-200/40 via-transparent to-amber-200/40 dark:via-amber-300/0"
         />
 
         {/* Top motif line */}
         <div
           aria-hidden="true"
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[88%] max-w-6xl h-px
-                     bg-gradient-to-r from-transparent via-amber-300/50 to-transparent"
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[88%] max-w-6xl h-px bg-gradient-to-r from-transparent via-amber-300/50 to-transparent"
         />
 
         {/* Title */}
@@ -174,12 +226,14 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
           className="
-            text-5xl md:text-7xl lg:text-8xl font-serif font-extrabold
-            bg-gradient-to-r from-yellow-300 via-amber-400 to-orange-500
-            text-transparent bg-clip-text tracking-wide
-            drop-shadow-[0_0_22px_rgba(255,185,80,0.45)]
-          "
-        >
+  text-5xl md:text-7xl lg:text-8xl font-serif font-extrabold
+  bg-gradient-to-r from-[#C98000] via-[#E07B00] to-[#C84900]
+  text-transparent bg-clip-text tracking-wide
+  [text-shadow:0_1px_0_rgba(0,0,0,0.25),0_2px_16px_rgba(224,123,0,0.35)]
+  dark:bg-gradient-to-r dark:from-yellow-300 dark:via-amber-400 dark:to-orange-500
+  dark:[text-shadow:0_0_22px_rgba(255,185,80,0.45)]
+"
+>
           VIRASAT
         </motion.h1>
 
@@ -188,21 +242,33 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.25, duration: 0.6 }}
-          className="mt-1 text-base md:text-lg text-amber-300/95 italic"
+         className="
+  mt-1 text-base md:text-lg italic
+  text-[#1F1F1F]
+  [text-shadow:0_1px_0_rgba(255,255,255,0.7)]
+  dark:text-amber-300/95 dark:[text-shadow:none]
+"
+
         >
           — भारत की अमर धरोहर —
         </motion.p>
 
-        {/* Tagline */}
-        <div className="mt-5 text-xl md:text-2xl text-amber-100/95">
-          <TextType text="Where Timeless India Lives" speed={36} />
-        </div>
+        <div className="
+  mt-5 text-xl md:text-2xl font-semibold
+  text-[#222222]
+  [text-shadow:0_1px_0_rgba(255,255,255,0.6)]
+  dark:text-amber-100/95 dark:[text-shadow:none]
+">
+  <TextType
+    text="Where Timeless India Lives"
+    speed={36}
+    textColors={theme === "dark" ? ["#FDE7A6"] : ["#222222"]}
+  />
+</div>
+
 
         {/* Action chips */}
-        <nav
-          aria-label="Quick navigation"
-          className="mt-4 max-w-3xl w-full flex flex-wrap justify-center gap-2"
-        >
+        <nav aria-label="Quick navigation" className="mt-4 max-w-3xl w-full flex flex-wrap justify-center gap-2" >
           {[
             { to: "/monuments", label: "Monuments", icon: "🏛️" },
             { to: "/stories", label: "Stories", icon: "📖" },
@@ -212,24 +278,20 @@ const HeroSection = () => {
             { to: "/blog", label: "Blog", icon: "✒️" },
             { to: "/auth", label: "Login", icon: "🔑" },
           ].map((c) => (
-            <Link key={c.to} to={c.to} className="group">
+            <Link key={c.to} to={c.to} className="group" >
               <span
+              
                 className="
                   inline-flex items-center gap-2 px-3 py-1.5 rounded-full
-                  border border-amber-300/25 text-amber-100/95
-                  bg-amber-300/10
-                  transition
-                  hover:border-amber-200/60 hover:bg-amber-200/15
-                  shadow-[inset_0_0_0_rgba(0,0,0,0)]
-                  hover:shadow-[0_6px_18px_rgba(255,195,120,0.12)]
-                  relative overflow-hidden
+                  border border-[#D8D3C8] text-[#1E1E1E] bg-[rgba(160,140,100,0.10)]
+                  hover:border-[#C8C2B6] hover:bg-[rgba(160,140,100,0.16)]
+                  dark:border-amber-300/25 dark:text-amber-100/95 dark:bg-amber-300/10
+                  transition shadow-[inset_0_0_0_rgba(0,0,0,0)]
+                  hover:shadow-[0_6px_18px_rgba(255,195,120,0.12)] relative overflow-hidden
                 "
               >
                 <span
-                  className="
-                    pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition
-                    bg-[radial-gradient(120px_circle_at_var(--mx)_var(--my),rgba(255,228,170,0.18),transparent_60%)]
-                  "
+                  className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-[radial-gradient(120px_circle_at_var(--mx)_var(--my),rgba(255,228,170,0.16),transparent_60%)]"
                   aria-hidden="true"
                 />
                 <span
@@ -246,9 +308,11 @@ const HeroSection = () => {
               </span>
             </Link>
           ))}
+          {/* Theme toggle right next to Login chip */}
+          <ThemeToggle />
         </nav>
 
-        {/* Single-row carousel (5–6 visible) */}
+        {/* Single-row carousel (6 visible) */}
         <SingleRowCarousel />
 
         {/* Divider */}
@@ -267,12 +331,12 @@ const HeroSection = () => {
             <MagneticButton
               className="
                 px-9 py-3 rounded-full font-semibold
-                text-yellow-100
-                bg-gradient-to-r from-[#5a3411] to-[#8b4513]
+                
                 border border-yellow-400/50
-                shadow-lg shadow-yellow-700/30
-                hover:from-[#6a3e14] hover:to-[#9a561f]
+                shadow-lg [box-shadow:0_10px_22px_rgba(107,78,26,0.14)]
+                hover:opacity-95
                 font-serif text-lg tracking-wide
+                text-yellow-100 bg-gradient-to-r from-[#5a3411] to-[#8b4513] shadow-yellow-700/30
                 transition
               "
             >
@@ -284,8 +348,7 @@ const HeroSection = () => {
         {/* Bottom motif line */}
         <div
           aria-hidden="true"
-          className="absolute bottom-3 left-1/2 -translate-x-1/2 w-[86%] max-w-5xl h-px
-                     bg-gradient-to-r from-transparent via-amber-300/55 to-transparent"
+          className="absolute bottom-3 left-1/2 -translate-x-1/2 w-[86%] max-w-5xl h-px bg-gradient-to-r from-transparent via-amber-300/45 to-transparent dark:via-amber-300/55"
         />
       </header>
     </MotionConfig>

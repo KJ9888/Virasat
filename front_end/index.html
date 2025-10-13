@@ -19,5 +19,18 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+  (function () {
+    try {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const wantDark = saved ? saved === 'dark' : prefersDark;
+      const root = document.documentElement; // or document.body
+      root.classList.toggle('dark', wantDark);
+      root.dataset.theme = wantDark ? 'dark' : 'light';
+    } catch {}
+  })();
+</script>
+
   </body>
 </html>
