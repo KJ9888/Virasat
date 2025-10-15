@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Animation from "../components/Animation";
 import { useNavigate } from "react-router-dom";
@@ -14,24 +14,26 @@ const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageUrl, altText }) => (
     className="w-full md:w-5/12 overflow-hidden rounded-xl shadow-xl transform transition-transform duration-500 hover:scale-105"
     initial={{ opacity: 0, y: 50 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.8 }}
+    viewport={{ once: true, margin: "-100px" }}
+    transition={{ duration: 0.3 }}
   >
     <img
       src={imageUrl}
       alt={altText}
+      loading="lazy"
       className="w-full h-72 md:h-80 lg:h-96 object-cover object-center"
     />
   </motion.div>
 );
 
 const sectionVariant = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 };
 
 const TajMahalPage: React.FC = () => {
   const navigate = useNavigate();
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   return (
     <>
@@ -41,14 +43,14 @@ const TajMahalPage: React.FC = () => {
 
       <NavbarTaj />
 
-      {/* Back Button on Top-Left */}
+      {/* Back Button - Faster Animation */}
       <motion.div
         className="absolute top-6 left-6 z-50"
         whileHover={{ scale: 1.05, boxShadow: "0px 4px 15px rgba(255, 200, 0, 0.6)" }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
       >
         <button
           onClick={() => navigate(-1)}
@@ -58,17 +60,14 @@ const TajMahalPage: React.FC = () => {
         </button>
       </motion.div>
 
-      <main className="font-sans text-gray-300 pt-20 ">
+      <main className="font-sans text-gray-300 pt-20">
         <article className="max-w-6xl mx-auto px-6">
+          {/* Header - Instant Load with Faster Animation */}
           <motion.header
             className="text-center mb-16 md:mb-24"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: { opacity: 0, y: -20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 1 } },
-            }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
           >
             <h1 className="font-serif m-10 text-5xl md:text-7xl font-extrabold text-amber-300">
               The Taj Mahal <br />
@@ -76,33 +75,38 @@ const TajMahalPage: React.FC = () => {
             </h1>
           </motion.header>
 
-          {/* -- Cinematic Video Section (FIXED) -- */}
+          {/* Video Section - Lazy Load on Scroll */}
           <motion.section
             className="mb-16 md:mb-24 w-full flex justify-center"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            viewport={{ once: true, margin: "-200px" }}
+            transition={{ duration: 0.5 }}
+            onViewportEnter={() => setVideoLoaded(true)}
           >
-            <div className="w-full md:w-4/5 aspect-video rounded-xl overflow-hidden shadow-2xl">
-              <iframe
-                src="https://www.youtube.com/embed/kK_MuPEm2kQ?rel=0&modestbranding=1"
-                title="Taj Mahal Cinematic Video"
-                allow="accelerometer;  autoplay: clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                
-                allowFullScreen
-                referrerPolicy="strict-origin-when-cross-origin"
-                className="w-full h-full"
-              />
+            <div className="w-full md:w-4/5 aspect-video rounded-xl overflow-hidden shadow-2xl bg-gray-900 flex items-center justify-center">
+              {videoLoaded ? (
+                <iframe
+                  src="https://www.youtube.com/embed/kK_MuPEm2kQ?rel=0&modestbranding=1"
+                  title="Taj Mahal Cinematic Video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  loading="lazy"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  className="w-full h-full"
+                />
+              ) : (
+                <div className="text-white text-lg">Loading video...</div>
+              )}
             </div>
           </motion.section>
 
-          {/* -- Section 1: Introduction (Text Left, Image Right) -- */}
+          {/* Section 1: Introduction */}
           <motion.section
             className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-16 md:mb-24"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={sectionVariant}
           >
             <div className="md:w-7/12 text-left">
@@ -119,12 +123,12 @@ const TajMahalPage: React.FC = () => {
             />
           </motion.section>
 
-          {/* -- Section 2: History (Image Left, Text Right) -- */}
+          {/* Section 2: History */}
           <motion.section
             className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16 mb-16 md:mb-24"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={sectionVariant}
           >
             <div className="md:w-7/12 text-right">
@@ -141,12 +145,12 @@ const TajMahalPage: React.FC = () => {
             />
           </motion.section>
 
-          {/* -- Section 3: Architecture (Image Left, Text Right) -- */}
+          {/* Section 3: Architecture */}
           <motion.section
             className="flex flex-col md:flex-row items-start gap-10 md:gap-16 mb-16 md:mb-24"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={sectionVariant}
           >
             <div className="md:w-7/12 text-left">
@@ -163,12 +167,12 @@ const TajMahalPage: React.FC = () => {
             />
           </motion.section>
 
-          {/* -- Section 4: Today (Image Right, Text Left) -- */}
+          {/* Section 4: Today */}
           <motion.section
             className="flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             variants={sectionVariant}
           >
             <div className="md:w-7/12 text-right">

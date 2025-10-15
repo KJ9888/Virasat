@@ -42,6 +42,15 @@ const tajImports = {
   virtualTour: () => import("./pages/TajVirtualTour"),
 };
 
+// Red Fort detailed pages - grouped  
+const redFortImports = {
+  intro: () => import("./pages/RedFortIntroduction"),
+  history: () => import("./pages/RedFortHistory"),
+  architecture: () => import("./pages/RedFortArchitecture"),
+  visit: () => import("./pages/RedFortVisit"),
+  virtualTour: () => import("./pages/RedFortVirtualTour"),
+};
+
 // State/Location routes
 const locationImports = {
   punjab: () => import("./pages/PunjabPage"),
@@ -94,6 +103,13 @@ const TajHistory = lazy(tajImports.history);
 const TajArchitecture = lazy(tajImports.architecture);
 const TajVisit = lazy(tajImports.visit);
 const TajVirtualTour = lazy(tajImports.virtualTour);
+
+// ✅ FIXED: Use redFortImports instead of redFortNavItems
+const RedFortIntroduction = lazy(redFortImports.intro);
+const RedFortHistory = lazy(redFortImports.history);
+const RedFortArchitecture = lazy(redFortImports.architecture);
+const RedFortVisit = lazy(redFortImports.visit);
+const RedFortVirtualTour = lazy(redFortImports.virtualTour);
 
 const PunjabPage = lazy(locationImports.punjab);
 const DelhiPage = lazy(locationImports.delhi);
@@ -153,7 +169,14 @@ const App: React.FC = () => {
           <Route path="/taj/architecture" element={<TajArchitecture />} />
           <Route path="/taj/visit" element={<TajVisit />} />
           <Route path="/taj/virtual-tour" element={<TajVirtualTour />} />
-          
+
+          {/* Red Fort Detailed Routes */}
+          <Route path="/red-fort/introduction" element={<RedFortIntroduction />} />
+          <Route path="/red-fort/history" element={<RedFortHistory />} />
+          <Route path="/red-fort/architecture" element={<RedFortArchitecture />} />
+          <Route path="/red-fort/visit" element={<RedFortVisit />} />
+          <Route path="/red-fort/virtual-tour" element={<RedFortVirtualTour />} />
+
           {/* State & Location Routes */}
           <Route path="/states" element={<StatesPage />} />
           <Route path="/states/punjab" element={<PunjabPage />} />
