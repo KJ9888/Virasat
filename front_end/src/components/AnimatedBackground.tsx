@@ -12,8 +12,7 @@ const AnimatedBackground: React.FC = () => (
       className="absolute top-0 left-0 w-[200%] h-full opacity-30"
       aria-hidden="true"
       style={{
-        backgroundImage:
-          "url('https://media.licdn.com/dms/image/v2/D5612AQHypqel3Ekxeg/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1683269188445?e=2147483647&v=beta&t=6-o_iao7y_TYjwldNEKpZNYwHP_t0VsNk3m7DpfoHhI')",
+        backgroundImage: "url('../assets/back.jpg')",
         animation: "pan-stars 180s linear infinite",
         marginTop: "5.2%",
         height: "100%",

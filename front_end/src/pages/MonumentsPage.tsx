@@ -1,153 +1,172 @@
-// src/pages/MonumentsPage.tsx
-
-import React from "react";
+import React, { useMemo, useRef } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { motion, MotionConfig, useReducedMotion } from "framer-motion";
+import { Link, useSearchParams } from "react-router-dom";
+import { monumentsData, allCities, allEras, allTags, type Monument } from "../data/monuments";
+import { FiltersBar } from "../components/FiltersBar";
+import { GridCard, TrendingCard } from "../components/Cards";
 import Animation from "../components/Animation";
 
-// Sample data for monuments
 
+const easeOut = [0.16, 1, 0.3, 1];
 
-const monumentsData = [
-  {
-    id: 'taj-mahal',
-    name: 'Taj Mahal',
-    description: "Agra's white marble monument built by Shah Jahan.",
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/da/Taj-Mahal.jpg',
-    path: '/monuments/taj-mahal'
-  },
-  {
-    id: 'qutub-minar',
-    name: 'Qutub Minar',
-    description: 'A UNESCO site in Delhi — tall brick minaret.',
-    imageUrl: 'https://imgs.search.brave.com/l9UgXOvqatlGaODTXZbw0qLap2LOqO-FrZ6aG8hBl_g/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTI1/MTUzNzUzMy9waG90/by9kZWxoaS1pbmRp/YS1tYXJjaC0xNS0y/MDIwLXRvdXJpc3Qt/dmlzaXQtYXQtaWxs/dW1pbmF0ZWQtcXV0/dWItbWluYXItYXQt/bmlnaHQuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPU5PY3RE/M1lfQVhUQ0pleXlZ/SndoN3o3NzZjaG1Y/Y00xSG1pWTB0Tmpm/WXM9',
-    path: '/monuments/qutub-minar'
-  },
-  {
-    id: 'red-fort',
-    name: 'Red Fort',
-    description: 'Delhi’s iconic fort and a UNESCO World Heritage Site.',
-    imageUrl: 'https://imgs.search.brave.com/N6ps6UTfVbXn7Zh-b_rOkGAdpjtoL9H5TWj9EIosX5c/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzIzLzQw/LzM2MF9GXzU5NzIz/NDA2OF9YN3VmZllq/YnBaUnREUTB4QmJa/QmtCU3dhV1AzZU1X/TS5qcGc',
-    path: '/monuments/red-fort'
-  },
-  {
-    id: 'hawa-mahal',
-    name: 'Hawa Mahal',
-    description: 'A stunning palace in Jaipur known for its unique architecture.',
-    imageUrl: 'https://imgs.search.brave.com/tOC_2mgsX4E35WzzvpgfkQ1rdAMUqrXfMw-0M_uB9EQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAyLzE2LzQ0LzIx/LzM2MF9GXzIxNjQ0/MjEyMV9ZUGxqMU92/Z1NpOWpRY1Q4WWJi/OE40ak56VUVRUkxn/cC5qcGc',
-    path: '/monuments/hawa-mahal'
-  },
-  {
-    id: 'gateway-of-india',
-    name: 'Gateway of India',
-    description: 'A monumental archway in Mumbai, overlooking the Arabian Sea.',
-    imageUrl: 'https://imgs.search.brave.com/bJ7VndnZB60zhwcPoq0igIrX9fDZywhlGowcqqnrZiU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNTEw/MTI0MzYxL3Bob3Rv/L2dhdGV3YXktb2Yt/aW5kaWEtYXQtbmln/aHQuanBnP3M9NjEy/eDYxMiZ3PTAmaz0y/MCZjPXNSeE1nN1JO/WWRJQXF5dm1ya1Bw/Yms0eGpqN0hhZjBD/YlFNem1mVWxUREk9',
-    path: '/monuments/gateway-of-india'
-  },
-  {
-    id: 'india-gate',
-    name: 'India Gate',
-    description: 'India Gate in New Delhi honors soldiers who died in World War I.',
-    imageUrl: 'https://imgs.search.brave.com/x99A2ts2xHO8Ux9G6c4wStBMseHXKzMsYFqZpvUcp5A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zN2Fw/MS5zY2VuZTcuY29t/L2lzL2ltYWdlL2lu/Y3JlZGlibGVpbmRp/YS9pbmRpYS1nYXRl/LWRlbGhpLTUtYXR0/ci1oZXJvP3FsdD04/MiZ0cz0xNzQyMTcw/MjQwMTMx',
-    path: '/monuments/india-gate'
-  },
-  {
-    id: 'charminar',
-    name: 'Charminar',
-    description: 'A historical monument located in Hyderabad.',
-    imageUrl: 'https://imgs.search.brave.com/46mJQyYvUTwj67-JG_rURHR54DyDjecPGQZakUs8ZfI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/NTExNjEyNDItYjVh/Zjc5N2I3MjMzP2Zt/PWpwZyZxPTYwJnc9/MzAwMCZpeGxpYj1y/Yi00LjEuMCZpeGlk/PU0zd3hNakEzZkRC/OE1IeHpaV0Z5WTJo/OE5ueDhZMmhoY20x/cGJtRnlmR1Z1ZkRC/OGZEQjhmSHd3',
-    path: '/monuments/charminar'
-  },
-  {
-    id: 'ajanta-caves',
-    name: 'Ajanta Caves',
-    description: 'A UNESCO World Heritage Site featuring ancient rock-cut caves.',
-    imageUrl: 'https://imgs.search.brave.com/M5UutIku7sZ4Lo459W6WiTwKXkXKITjXInX7C60bD2A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA3LzEzLzI4Lzgz/LzM2MF9GXzcxMzI4/ODM4MF90MDdVekxY/dVc5UmhXZXFDNWNN/TkpLR1NndU9yYXN6/TS5qcGc',
-    path: '/monuments/ajanta-caves'
-  },
-  {
-    id: 'konark-sun-temple',
-    name: 'Sun Temple, Konark',
-    description: 'A historical monument located in Odisha.',
-    imageUrl: 'https://imgs.search.brave.com/P0b_QlQOC2vKCOYiGvSTtR9M_G9W8E-5xU4VeXccm8s/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzEzLzk1LzI4Lzk0/LzM2MF9GXzEzOTUy/ODk0OTBfQlFHRlNO/bGtsejhGMlE3VUNv/Uk5HUGRuTnBoYkht/TlUuanBn',
-    path: '/monuments/konark-sun-temple'
-  }
-];
-
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
+const filterList = (list: Monument[], params: URLSearchParams) => {
+  const city = params.get("city") || "";
+  const era = params.get("era") || "";
+  const tag = params.get("tag") || "";
+  const q = (params.get("q") || "").toLowerCase();
+  return list.filter(m => {
+    if (city && m.city !== city) return false;
+    if (era && m.era !== era) return false;
+    if (tag && m.tag !== tag) return false;
+    if (q && !m.name.toLowerCase().includes(q)) return false;
+    return true;
+  });
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 50, scale: 0.95 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" } }
+const spanClassForIndex = (i: number) => {
+  const tall = i % 7 === 0 || i % 7 === 3;
+  const wide = i % 7 === 2;
+  return "lg:" + (tall ? "row-span-2" : wide ? "col-span-2" : "row-span-1");
 };
 
 const MonumentsPage: React.FC = () => {
+  const prefersReducedMotion = useReducedMotion();
+  const [params] = useSearchParams();
+
+  const filtered = useMemo(() => filterList(monumentsData, params), [params]);
+  const trending = useMemo(() => {
+    const list = filterList(monumentsData, params);
+    return [...list].sort((a, b) => (b.popularity || 0) - (a.popularity || 0)).slice(0, 6);
+  }, [params]);
+
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const scrollToContent = () =>
+    contentRef.current?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+
+  // Header height for spacing alignment (match your Header actual height)
+  const headerHeight = 72;
+
   return (
     <>
     <Animation />
-    <motion.div className="min-h-screen bg-[#111] text-white">
-      <Header />
-      <main className="container mx-auto py-24 px-6">
+      
+    <MotionConfig reducedMotion="user">
+      <div className="relative min-h-screen text-white selection:bg-white/10 selection:text-white">
+        {/* Ambient background */}
+        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
+          <div className="absolute inset-0 opacity-30 mix-blend-screen">
+            <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-orange-500/20 blur-3xl" />
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
+            <div className="absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-emerald-500/20 blur-3xl" />
+          </div>
+          <div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(transparent_1px,#000_1px)] [background-size:3px_3px]" />
+        </div>
 
-        {/* Patriotic Gradient Heading */}
-        <motion.h1
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-5xl md:text-6xl font-extrabold text-center mb-12 
-                     bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-white to-green-500
-                     drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
-        >
-          Monuments of India
-        </motion.h1>
+        <Header />
 
-        {/* Grid with Staggered Animation */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8"
-          initial="hidden"
-          animate="show"
-          variants={containerVariants}
-        >
-          {monumentsData.map((monument) => (
-            <Link to={monument.path} key={monument.id}>
-              <motion.div
-                variants={cardVariants}
+        {/* Spacer so hero never collides with sticky header on small screens */}
+        <div style={{ height: headerHeight }} />
 
-                whileHover={{ scale: 1.07, boxShadow: "0 10px 20px rgba(255, 255, 255, 0.2)" }}
-                className="relative rounded-lg overflow-hidden cursor-pointer shadow-lg flex flex-col"
+        {/* Hero */}
+        <section className="relative overflow-hidden">
+          <div className="container mx-auto px-6 pt-4 md:pt-10">
+            <motion.h1
+              initial={prefersReducedMotion ? {} : { y: 14, opacity: 0 }}
+              animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, ease: easeOut }}
+              className="text-center text-4xl md:text-7xl font-black tracking-tight
+                         [text-shadow:0_1px_0_rgba(255,255,255,0.06)]
+                         bg-clip-text text-transparent
+                         bg-[linear-gradient(90deg,#f59e0b,40%,#ffffff,60%,#10b981)]
+                         [background-size:200%_100%] animate-[bg-move_8s_linear_infinite]"
+              style={{ WebkitTextStrokeWidth: 1, WebkitTextStrokeColor: "rgba(255,255,255,0.12)" }}
+            >
+              Monuments of India
+            </motion.h1>
+
+            <motion.p
+              initial={prefersReducedMotion ? {} : { y: 12, opacity: 0 }}
+              animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+              className="mx-auto mt-4 max-w-2xl text-center text-gray-300"
+            >
+              Explore iconic landmarks through history, craftsmanship, and living heritage.
+            </motion.p>
+
+            {/* Single CTA row (no duplicates) */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+              <button
+                onClick={scrollToContent}
+                className="rounded-full border border-white/15 bg-white/10 px-5 py-2.5 text-sm font-medium text-white/90 backdrop-blur hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
               >
-                {/* Card Image with fixed height */}
-                <motion.img
-                  src={monument.imageUrl}
-                  alt={monument.name}
-                  className="w-full h-64 object-cover"
-                />
-                {/* Card content with fixed height to make all cards uniform */}
-                <div className="p-6 bg-gray-900 bg-opacity-70 flex-1 flex flex-col justify-start">
-                  <div className="h-1 w-full bg-gradient-to-r from-orange-400 via-white to-green-500 mb-2 rounded"></div>
-                  <h3 className="text-2xl font-bold">{monument.name}</h3>
-                  <p className="text-gray-300 mt-2">{monument.description}</p>
-                </div>
-              </motion.div>
-            </Link>
-          ))}
-        </motion.div>
+                Start Exploring
+              </button>
+              <Link
+                to="/unesco"
+                className="rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/90 backdrop-blur hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+              >
+                UNESCO Picks
+              </Link>
+              <Link
+                to="/surprise"
+                className="rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/90 backdrop-blur hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+              >
+                Surprise Me
+              </Link>
+            </div>
 
-      </main>
-      <Footer />
-    </motion.div>
+            <motion.div
+              aria-hidden
+              initial={false}
+              animate={prefersReducedMotion ? {} : { y: [-4, 4, -4] }}
+              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+              className="pointer-events-none mx-auto mt-8 h-1 w-44 rounded-full bg-gradient-to-r from-orange-400/50 via-white/50 to-emerald-400/50"
+            />
+          </div>
+        </section>
+
+        {/* Filters (sticky bar already handles offset via its own prop if needed) */}
+        <div ref={contentRef} />
+        <FiltersBar cities={allCities} eras={allEras} tags={allTags} topOffsetPx={headerHeight} />
+
+        {/* Trending near you – enhanced */}
+        <section className="container mx-auto px-6 py-1 ">
+         
+            <div className=" text-center text-lg md:text-xl   ">
+              <h2 className="text-5xl text-yellow-500 font-bold ">Trending near you</h2>
+              
+              <p className="mt-1  text-white/70 py-2">Popular picks matching current filters.</p>
+            </div>
+            
+          
+
+          <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {trending.map((m, i) => <TrendingCard key={m.id} m={m} index={i} />)}
+          </div>
+        </section>
+
+        {/* Divider + heading before all monuments */}
+        <section className="container mx-auto px-6 pt-10 text-center">
+          <div className="mx-auto mb-6 h-px w-full max-w-5xl bg-white/10" />
+          <h2 className="mb-4 text-5xl font-bold text-yellow-500 m-10">All Monuments</h2>
+        </section>
+
+        {/* Main grid */}
+        <main className="container mx-auto px-6 pb-16">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 auto-rows-[1fr]">
+            {filtered.map((m, i) => (
+              <GridCard key={m.id} m={m} index={i} spanClass={spanClassForIndex(i)} />
+            ))}
+          </div>
+        </main>
+
+        <Footer />
+      </div>
+    </MotionConfig>
     </>
   );
-  
 };
 
 export default MonumentsPage;

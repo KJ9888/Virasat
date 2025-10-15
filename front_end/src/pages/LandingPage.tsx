@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import HeroSection from "./HeroSection";
 
 
+
 const MagneticButton = ({ children, className = "", ...props }: any) => {
   return (
     <motion.button
@@ -49,6 +50,7 @@ const LandingPage: React.FC = () => {
   return (
     <>
       {/* Hero Section */}
+      
       <HeroSection />
 
       {/* Monuments Section — amber glass theme like Auth */}
