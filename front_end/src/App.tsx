@@ -98,6 +98,13 @@ const Blog = lazy(otherImports.blog);
 const UnescoPicksPage = lazy(otherImports.unesco);
 const SurprisePage = lazy(otherImports.surprise);
 const CompareDetails = lazy(otherImports.compare);
+const LandakhPage = lazy(() => import("./pages/LadakhPage"));
+const KarnatakaPage = lazy(() => import("./pages/KarnatakaPage"));
+const KeralaPage = lazy(() => import("./pages/KeralaPage"));
+const AndamanNicobarPage = lazy(() => import("./pages/AndamanNicobarPage"));
+const TamilNaduPage = lazy(() => import("./pages/TamilNaduPage"));
+const UttarakhandPage = lazy(() => import("./pages/UttarakhandPage"));
+
 
 const App: React.FC = () => {
   return (
@@ -143,6 +150,13 @@ const App: React.FC = () => {
           <Route path="/taj/architecture" element={<TajArchitecture />} />
           <Route path="/taj/visit" element={<TajVisit />} />
           <Route path="/taj/virtual-tour" element={<TajVirtualTour />} />
+          <Route path="/union-territories/ladakh" element={<LandakhPage />} />
+          <Route path="/states/karnataka" element={<KarnatakaPage />} />
+          <Route path="/states/kerala" element={<KeralaPage />} />
+          <Route path="/union-territories/andaman-nicobar" element={<AndamanNicobarPage />} />
+          <Route path="/states/tamil-nadu" element={<TamilNaduPage />} />
+          <Route path="/states/uttarakhand" element={<UttarakhandPage />} />
+          <Route path="*" element={<ComingSoonPage />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

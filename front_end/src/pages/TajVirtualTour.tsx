@@ -102,14 +102,7 @@ const TajVirtualTour: React.FC = () => {
               >
                 Book Tickets
               </a>
-              <a
-                href="https://maps.app.goo.gl/1o1j4w6m9o4v8Y8y7"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg border border-amber-600/40 text-amber-300 hover:bg-amber-500/10"
-              >
-                Open in Maps
-              </a>
+              
             </div>
           </div>
         </motion.section>
