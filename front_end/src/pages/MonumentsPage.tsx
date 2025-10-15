@@ -154,13 +154,15 @@ const MonumentsPage: React.FC = () => {
         </section>
 
         {/* Main grid */}
-        <main className="container mx-auto px-6 pb-16">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 auto-rows-[1fr]">
-            {filtered.map((m, i) => (
-              <GridCard key={m.id} m={m} index={i} spanClass={spanClassForIndex(i)} />
-            ))}
-          </div>
-        </main>
+        {/* Main grid - Clean uniform layout */}
+<main className="container mx-auto px-6 pb-16">
+  <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    {filtered.map((m, i) => (
+      <GridCard key={m.id} m={m} index={i} />
+    ))}
+  </div>
+</main>
+
 
         <Footer />
       </div>

@@ -42,13 +42,23 @@ const tajImports = {
   virtualTour: () => import("./pages/TajVirtualTour"),
 };
 
+// State/Location routes
+const locationImports = {
+  punjab: () => import("./pages/PunjabPage"),
+  delhi: () => import("./pages/DelhiPage"),
+  ladakh: () => import("./pages/LadakhPage"),
+  karnataka: () => import("./pages/KarnatakaPage"),
+  kerala: () => import("./pages/KeralaPage"),
+  andaman: () => import("./pages/AndamanNicobarPage"),
+  tamilNadu: () => import("./pages/TamilNaduPage"),
+  uttarakhand: () => import("./pages/UttarakhandPage"),
+};
+
 // Other routes
 const otherImports = {
   dance: () => import("./pages/DancePage"),
   states: () => import("./pages/StatesPage"),
   auth: () => import("./pages/AuthPage"),
-  punjab: () => import("./pages/PunjabPage"),
-  delhi: () => import("./pages/DelhiPage"),
   comingSoon: () => import("./pages/ComingSoonPage"),
   planTrip: () => import("./pages/PlanTripPage"),
   finalall: () => import("./pages/Finalall"),
@@ -85,11 +95,18 @@ const TajArchitecture = lazy(tajImports.architecture);
 const TajVisit = lazy(tajImports.visit);
 const TajVirtualTour = lazy(tajImports.virtualTour);
 
+const PunjabPage = lazy(locationImports.punjab);
+const DelhiPage = lazy(locationImports.delhi);
+const LadakhPage = lazy(locationImports.ladakh);
+const KarnatakaPage = lazy(locationImports.karnataka);
+const KeralaPage = lazy(locationImports.kerala);
+const AndamanNicobarPage = lazy(locationImports.andaman);
+const TamilNaduPage = lazy(locationImports.tamilNadu);
+const UttarakhandPage = lazy(locationImports.uttarakhand);
+
 const DancePage = lazy(otherImports.dance);
 const StatesPage = lazy(otherImports.states);
 const AuthPage = lazy(otherImports.auth);
-const PunjabPage = lazy(otherImports.punjab);
-const DelhiPage = lazy(otherImports.delhi);
 const ComingSoonPage = lazy(otherImports.comingSoon);
 const PlanTripPage = lazy(otherImports.planTrip);
 const Finalall = lazy(otherImports.finalall);
@@ -98,13 +115,6 @@ const Blog = lazy(otherImports.blog);
 const UnescoPicksPage = lazy(otherImports.unesco);
 const SurprisePage = lazy(otherImports.surprise);
 const CompareDetails = lazy(otherImports.compare);
-const LandakhPage = lazy(() => import("./pages/LadakhPage"));
-const KarnatakaPage = lazy(() => import("./pages/KarnatakaPage"));
-const KeralaPage = lazy(() => import("./pages/KeralaPage"));
-const AndamanNicobarPage = lazy(() => import("./pages/AndamanNicobarPage"));
-const TamilNaduPage = lazy(() => import("./pages/TamilNaduPage"));
-const UttarakhandPage = lazy(() => import("./pages/UttarakhandPage"));
-
 
 const App: React.FC = () => {
   return (
@@ -114,6 +124,8 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/monuments" element={<MonumentsPage />} />
+          
+          {/* Monument Routes */}
           <Route path="/monuments/red-fort" element={<RedFortPageDynamic />} />
           <Route path="/monuments/qutub-minar" element={<QutubMinar />} />
           <Route path="/monuments/taj-mahal" element={<TajMahalPage />} />
@@ -123,39 +135,49 @@ const App: React.FC = () => {
           <Route path="/monuments/charminar" element={<CharminarPage />} />
           <Route path="/monuments/ajanta-caves" element={<AjantaCavesPage />} />
           <Route path="/monuments/konark-sun-temple" element={<KonarkSunTemplePage />} />
+          
+          {/* Story Routes */}
+          <Route path="/stories" element={<Stories />} />
           <Route path="/stories/ashoka-the-great" element={<AshokaPage />} />
           <Route path="/stories/sambhaji-maharaj" element={<SambhajiMaharajPage />} />
           <Route path="/stories/khalsa-birth" element={<KhalsaBirthPage />} />
           <Route path="/stories/maharana-pratap" element={<MaharanaPratapPage />} />
-          <Route path="/states/punjab" element={<PunjabPage />} />
-          <Route path="/union-territories/delhi" element={<DelhiPage />} />
-          <Route path="/plan-trip" element={<PlanTripPage />} />
-          <Route path="/stories" element={<Stories />} />
-          <Route path="/dance" element={<DancePage />} />
-          <Route path="/states" element={<StatesPage />} />
-          <Route path="/coming-soon" element={<ComingSoonPage />} />
-          <Route path="/store-virasat-store" element={<VirasatStore />} />
           <Route path="/stories/mahabharata" element={<MahabharataPage />} />
-          <Route path="/finalall" element={<Finalall />} />
-          <Route path="/blog" element={<Blog />} />
           <Route path="/stories/ramayana" element={<RamayanaPage />} />
           <Route path="/stories/guru-granth-sahib" element={<GuruGranthSahibPage />} />
           <Route path="/stories/akbar-the-great" element={<AkbarTheGreatPage />} />
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/unesco" element={<UnescoPicksPage />} />
-          <Route path="/surprise" element={<SurprisePage />} />
-          <Route path="/compare" element={<CompareDetails />} />
+          
+          {/* Taj Detailed Routes */}
           <Route path="/taj/introduction" element={<TajIntroduction />} />
           <Route path="/taj/history" element={<TajHistory />} />
           <Route path="/taj/architecture" element={<TajArchitecture />} />
           <Route path="/taj/visit" element={<TajVisit />} />
           <Route path="/taj/virtual-tour" element={<TajVirtualTour />} />
-          <Route path="/union-territories/ladakh" element={<LandakhPage />} />
+          
+          {/* State & Location Routes */}
+          <Route path="/states" element={<StatesPage />} />
+          <Route path="/states/punjab" element={<PunjabPage />} />
           <Route path="/states/karnataka" element={<KarnatakaPage />} />
           <Route path="/states/kerala" element={<KeralaPage />} />
-          <Route path="/union-territories/andaman-nicobar" element={<AndamanNicobarPage />} />
           <Route path="/states/tamil-nadu" element={<TamilNaduPage />} />
           <Route path="/states/uttarakhand" element={<UttarakhandPage />} />
+          <Route path="/union-territories/delhi" element={<DelhiPage />} />
+          <Route path="/union-territories/ladakh" element={<LadakhPage />} />
+          <Route path="/union-territories/andaman-nicobar" element={<AndamanNicobarPage />} />
+          
+          {/* Other Routes */}
+          <Route path="/dance" element={<DancePage />} />
+          <Route path="/plan-trip" element={<PlanTripPage />} />
+          <Route path="/store-virasat-store" element={<VirasatStore />} />
+          <Route path="/finalall" element={<Finalall />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/unesco" element={<UnescoPicksPage />} />
+          <Route path="/surprise" element={<SurprisePage />} />
+          <Route path="/compare" element={<CompareDetails />} />
+          <Route path="/coming-soon" element={<ComingSoonPage />} />
+          
+          {/* Fallback Route */}
           <Route path="*" element={<ComingSoonPage />} />
         </Routes>
       </Suspense>

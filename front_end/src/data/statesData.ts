@@ -7,6 +7,41 @@ export type StateInfo = {
   famousItems: { id: string; title: string; price: number; img: string }[];
 };
 
+// Indian states and major cities data
+export const indianStates = [
+  { name: "Andhra Pradesh", cities: ["Hyderabad", "Visakhapatnam", "Vijayawada", "Tirupati"] },
+  { name: "Arunachal Pradesh", cities: ["Itanagar", "Tawang", "Bomdila"] },
+  { name: "Assam", cities: ["Guwahati", "Dibrugarh", "Jorhat", "Silchar"] },
+  { name: "Bihar", cities: ["Patna", "Gaya", "Muzaffarpur", "Bhagalpur"] },
+  { name: "Chhattisgarh", cities: ["Raipur", "Bilaspur", "Durg", "Korba"] },
+  { name: "Goa", cities: ["Panaji", "Margao", "Vasco da Gama", "Mapusa"] },
+  { name: "Gujarat", cities: ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Gandhinagar"] },
+  { name: "Haryana", cities: ["Chandigarh", "Gurgaon", "Faridabad", "Panipat"] },
+  { name: "Himachal Pradesh", cities: ["Shimla", "Manali", "Dharamshala", "Kullu"] },
+  { name: "Jharkhand", cities: ["Ranchi", "Jamshedpur", "Dhanbad", "Bokaro"] },
+  { name: "Karnataka", cities: ["Bangalore", "Mysore", "Hubli", "Mangalore", "Belgaum"] },
+  { name: "Kerala", cities: ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur", "Kannur"] },
+  { name: "Madhya Pradesh", cities: ["Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain"] },
+  { name: "Maharashtra", cities: ["Mumbai", "Pune", "Nagpur", "Nashik", "Aurangabad"] },
+  { name: "Manipur", cities: ["Imphal", "Thoubal", "Bishnupur"] },
+  { name: "Meghalaya", cities: ["Shillong", "Tura", "Jowai"] },
+  { name: "Mizoram", cities: ["Aizawl", "Lunglei", "Saiha"] },
+  { name: "Nagaland", cities: ["Kohima", "Dimapur", "Mokokchung"] },
+  { name: "Odisha", cities: ["Bhubaneswar", "Cuttack", "Rourkela", "Berhampur"] },
+  { name: "Punjab", cities: ["Chandigarh", "Ludhiana", "Amritsar", "Jalandhar", "Patiala"] },
+  { name: "Rajasthan", cities: ["Jaipur", "Jodhpur", "Udaipur", "Kota", "Ajmer"] },
+  { name: "Sikkim", cities: ["Gangtok", "Namchi", "Mangan"] },
+  { name: "Tamil Nadu", cities: ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem"] },
+  { name: "Telangana", cities: ["Hyderabad", "Warangal", "Nizamabad", "Khammam"] },
+  { name: "Tripura", cities: ["Agartala", "Dharmanagar", "Udaipur"] },
+  { name: "Uttar Pradesh", cities: ["Lucknow", "Kanpur", "Agra", "Varanasi", "Meerut", "Ghaziabad"] },
+  { name: "Uttarakhand", cities: ["Dehradun", "Haridwar", "Rishikesh", "Nainital", "Mussoorie"] },
+  { name: "West Bengal", cities: ["Kolkata", "Howrah", "Durgapur", "Asansol", "Siliguri"] },
+  { name: "Delhi", cities: ["New Delhi", "Central Delhi", "East Delhi", "West Delhi"] },
+  { name: "Jammu and Kashmir", cities: ["Srinagar", "Jammu", "Leh", "Kargil"] },
+  { name: "Ladakh", cities: ["Leh", "Kargil", "Drass"] },
+];
+
 const states: StateInfo[] = [
   {
     id: "Maharashtra",
