@@ -58,7 +58,7 @@ const routes: Route[] = [
     duration: "3-4 hours",
     mode: "Train",
     highlights: ["Taj Mahal", "Agra Fort", "Fatehpur Sikri"],
-    image: "https://images.unsplash.com/photo-1580734075281-1c4b9d67dcb3?q=80&w=1200&auto=format&fit=crop",
+    image: "https://s3.india.com/wp-content/uploads/2024/02/Feature-Image-of-Agra.jpg##image/jpg",
   },
   {
     id: "mumbai-goa",
@@ -68,7 +68,7 @@ const routes: Route[] = [
     duration: "10-12 hours",
     mode: "Road",
     highlights: ["Beaches", "Portuguese Heritage", "Nightlife"],
-    image: "https://images.unsplash.com/photo-1529336953121-ad3c1110462b?q=80&w=1200&auto=format&fit=crop",
+    image: "https://cms-b2c-media.s3.amazonaws.com/pkg_thumb_6ce283ac2d.webp",
   },
   {
     id: "bangalore-mysore",
@@ -100,7 +100,7 @@ const experiences = [
     locations: ["Ladakh", "Manali", "Shimla"],
     color: "bg-emerald-600",
     gradient: "from-emerald-600/20 to-emerald-600/5",
-    image: "https://images.unsplash.com/photo-1529927054740-2153cf8608b6?q=80&w=1200&auto=format&fit=crop",
+    image: "https://www.mypunepulse.com/wp-content/uploads/2025/03/Top-6-Hill-Stations-in-India-to-Visit-This-March-April-for-a-Refreshing-Escape.jpg",
   },
   {
     icon: Waves,
@@ -118,7 +118,7 @@ const experiences = [
     locations: ["Rajasthan", "Delhi", "Hampi"],
     color: "bg-amber-600",
     gradient: "from-amber-600/20 to-amber-600/5",
-    image: "https://images.unsplash.com/photo-1587248720329-9625ea1db8d2?q=80&w=1200&auto=format&fit=crop",
+    image: "https://www.shikhar.com/blog/wp-content/uploads/2019/02/Mehrangarh-Fort.jpg",
   },
   {
     icon: Palmtree,
@@ -357,7 +357,7 @@ const flightOptions: FlightOption[] = [
     duration: "2h 30m",
     price: 8500,
     stops: "Non-stop",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Air_India_Logo.svg"
+    logo: "https://www.savaari.com/blog/wp-content/uploads/2022/05/delhi-agra-roadtrip.jpg"
   },
   {
     id: "2",
@@ -414,7 +414,7 @@ const trainOptions: TrainOption[] = [
   {
     id: "3",
     trainName: "Duronto Express",
-    trainNumber: "12213",
+    trainNumber: "12213", 
     departure: "22:20",
     arrival: "11:00+1",
     duration: "12h 40m",
@@ -460,7 +460,7 @@ const tripPackages: TripPackage[] = [
     pricePerPerson: 25999,
     rating: 4.6,
     inclusions: ["Houseboat", "Breakfast & Dinner", "Sightseeing", "Transfers"],
-    thumbnail: "https://images.unsplash.com/photo-1588269845580-7288edcb0f8b?q=80&w=1200&auto=format&fit=crop",
+    thumbnail: "https://lp-cms-production.imgix.net/2025-04/shutterstock2454866115.jpg?auto=format,compress&q=72&w=1440&h=810&fit=crop",
   },
   {
     id: "pkg-goa-beaches",
@@ -471,7 +471,7 @@ const tripPackages: TripPackage[] = [
     pricePerPerson: 19999,
     rating: 4.5,
     inclusions: ["Beach Resort", "Breakfast", "Local Transfers"],
-    thumbnail: "https://images.unsplash.com/photo-1620516961640-e59f5f25fbe1?q=80&w=1200&auto=format&fit=crop",
+    thumbnail: "https://www.amritara.co.in/blog/admin/assets/img/post/image_2023-01-06-09-00-20_63b7e32458785.jpg",
   },
   {
     id: "pkg-golden-triangle",
@@ -482,7 +482,7 @@ const tripPackages: TripPackage[] = [
     pricePerPerson: 14999,
     rating: 4.4,
     inclusions: ["3★ Hotels", "Breakfast", "Guided Tours", "AC Sedan"],
-    thumbnail: "https://images.unsplash.com/photo-1578926374376-4a0efc02f77f?q=80&w=1200&auto=format&fit=crop",
+    thumbnail: "https://samedaytriptajmahal.com/wp-content/uploads/2024/08/Golden-Triangle-Tour-By-Train-1.jpg",
   },
 ];
 
@@ -509,7 +509,7 @@ const tourGuides: TourGuide[] = [
     pricePerPerson: 1200,
     rating: 4.8,
     provider: "Local City Guide Co.",
-    image: "https://images.unsplash.com/photo-1599661046289-e31897846e78?q=80&w=1200&auto=format&fit=crop",
+    image: "https://media1.thrillophilia.com/filestore/jnhicsz9wf9kpiwvqe3bzsz1edzg_1605795365_shutterstock_197923865.jpg?w=400&dpr=2",
   },
   {
     id: "tour-udaipur-lakes",
@@ -520,7 +520,7 @@ const tourGuides: TourGuide[] = [
     pricePerPerson: 1500,
     rating: 4.7,
     provider: "Royal Trails",
-    image: "https://images.unsplash.com/photo-1625398407411-bf66d62f37a9?q=80&w=1200&auto=format&fit=crop",
+    image: "https://s7ap1.scene7.com/is/image/incredibleindia/lake-palace-udaipur-rajasthan-1-attr-hero?qlt=82&ts=1742197086437",
   },
   {
     id: "tour-goa-beach-food",
@@ -531,7 +531,7 @@ const tourGuides: TourGuide[] = [
     pricePerPerson: 1800,
     rating: 4.6,
     provider: "Coastal Explorers",
-    image: "https://images.unsplash.com/photo-1544551763-7ef4200fbf81?q=80&w=1200&auto=format&fit=crop",
+    image: "https://www.resortrio.com/wp-content/uploads/2025/07/Best-Time-To-Visit-Goa-16-Picsart-AiImageEnhancer-1600x900.jpg",
   },
   {
     id: "tour-corbett-safari",

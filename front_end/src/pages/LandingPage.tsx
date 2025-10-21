@@ -75,7 +75,7 @@ const LandingPage: React.FC = () => {
   />
   <div
     aria-hidden="true"
-    className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_60%,rgba(0,0,0,0)_40%,rgba(0,0,0,0.55)_100%)]"
+    className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_60%,rgba(0,0,0,0)_100%,rgba(0,0,0,0.55)_100%)]"
   />
 
   {/* Title with warm gradient like Auth */}

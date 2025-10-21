@@ -8,9 +8,7 @@ import { FiltersBar } from "../components/FiltersBar";
 import { GridCard, TrendingCard } from "../components/Cards";
 import Animation from "../components/Animation";
 
-
-const easeOut = [0.16, 1, 0.3, 1];
-
+  
 const filterList = (list: Monument[], params: URLSearchParams) => {
   const city = params.get("city") || "";
   const era = params.get("era") || "";
@@ -25,12 +23,12 @@ const filterList = (list: Monument[], params: URLSearchParams) => {
   });
 };
 
-const spanClassForIndex = (i: number) => {
-  const tall = i % 7 === 0 || i % 7 === 3;
-  const wide = i % 7 === 2;
-  return "lg:" + (tall ? "row-span-2" : wide ? "col-span-2" : "row-span-1");
-};
-
+// const spanClassForIndex = (i: number) => {
+//   const tall = i % 7 === 0 || i % 7 === 3;
+//   const wide = i % 7 === 2;
+//   return "lg:" + (tall ? "row-span-2" : wide ? "col-span-2" : "row-span-1");
+// };
+    
 const MonumentsPage: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
   const [params] = useSearchParams();
@@ -46,14 +44,14 @@ const MonumentsPage: React.FC = () => {
     contentRef.current?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
 
   // Header height for spacing alignment (match your Header actual height)
-  const headerHeight = 72;
+  const headerHeight = 80;
 
   return (
     <>
-    <Animation />
+    <Animation /> 
       
     <MotionConfig reducedMotion="user">
-      <div className="relative min-h-screen text-white selection:bg-white/10 selection:text-white">
+      <div className="relative min-h-screen text-white selection:bg-white/10 selection:text-white overflow-x-hidden">
         {/* Ambient background */}
         <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
           <div className="absolute inset-0 opacity-30 mix-blend-screen">
@@ -75,7 +73,7 @@ const MonumentsPage: React.FC = () => {
             <motion.h1
               initial={prefersReducedMotion ? {} : { y: 14, opacity: 0 }}
               animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
-              transition={{ duration: 0.7, ease: easeOut }}
+              transition={{ duration: 0.7 }}
               className="text-center text-4xl md:text-7xl font-black tracking-tight
                          [text-shadow:0_1px_0_rgba(255,255,255,0.06)]
                          bg-clip-text text-transparent

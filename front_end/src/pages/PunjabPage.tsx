@@ -12,12 +12,12 @@ type CardItem = {
 };
 
 const bannerImage = "https://c4.wallpaperflare.com/wallpaper/672/590/570/5bd29862113f1-wallpaper-preview.jpg";
-const bannerFacts = [
-  "🌾 Punjab is known as the Granary of India, leading wheat and rice production.",
-  "🏰 Amritsar's Golden Temple attracts millions of visitors each year.",
-  "🎉 Punjab is home to vibrant Bhangra and Giddha folk dances.",
-  "🍽️ Langar at the Golden Temple serves free meals to over 50,000 daily."
-];
+// const bannerFacts = [
+//   "🌾 Punjab is known as the Granary of India, leading wheat and rice production.",
+//   "🏰 Amritsar's Golden Temple attracts millions of visitors each year.",
+//   "🎉 Punjab is home to vibrant Bhangra and Giddha folk dances.",
+//   "🍽️ Langar at the Golden Temple serves free meals to over 50,000 daily."
+// ];
 
 const keyAttractions: CardItem[] = [
   {
@@ -144,14 +144,14 @@ const galleryImgs: string[] = [
 ];
 
 const PunjabPage: React.FC = () => {
-  const [factIndex, setFactIndex] = useState(0);
+  // const [factIndex, setFactIndex] = useState(0);
   const [quoteIndex, setQuoteIndex] = useState(0);
 
   useEffect(() => {
-    const factTimer = setInterval(() => setFactIndex(f => (f + 1) % bannerFacts.length), 4000);
+    // const factTimer = setInterval(() => setFactIndex(f => (f + 1) % bannerFacts.length), 4000);
     const quoteTimer = setInterval(() => setQuoteIndex(q => (q + 1) % funQuotes.length), 6500);
     return () => {
-      clearInterval(factTimer);
+      // clearInterval(factTimer);
       clearInterval(quoteTimer);
     };
   }, []);
@@ -167,14 +167,14 @@ const PunjabPage: React.FC = () => {
           <img
             src={bannerImage}
             alt="Punjab Banner"
-            className="absolute w-full h-full object-cover"
-            style={{ filter: "brightness(0.7)" }}
+            className="absolute w-full h-full object-cover top-15 "
+            style={{ filter: "brightness(0.9)" }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/55 to-transparent flex flex-col justify-center items-center p-8 text-center z-10">
             <motion.h1
               className="text-6xl md:text-7xl font-extrabold text-yellow-200 drop-shadow-2xl mb-4"
               initial={{ y: -60, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              animate={{ y: -20, opacity: 1 }}
             >Punjab</motion.h1>
             <motion.p
               className="text-2xl md:text-3xl font-semibold text-gray-200 mb-12"
@@ -182,13 +182,13 @@ const PunjabPage: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >India’s Breadbasket · Festivals · Faith · Flavour</motion.p>
-            <motion.div
+            {/* <motion.div
               className="bg-white/20 backdrop-blur-lg border border-yellow-200 shadow-2xl rounded-xl px-6 py-3 text-lg text-yellow-200 mb-5 font-semibold"
               key={factIndex}
               initial={{ opacity: 0, scale: 0.93 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-            >{bannerFacts[factIndex]}</motion.div>
+            >{bannerFacts[factIndex]}</motion.div> */}
             <a
               href="#attractions"
               className="mt-6 px-8 py-4 bg-[#fff176] hover:bg-[#ffe082] rounded-full text-gray-900 font-bold text-xl shadow-lg"

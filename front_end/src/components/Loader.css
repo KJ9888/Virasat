@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--background-color, #ffffff);
+  background: var(--background-color, #0e0d0def);
   z-index: 9999;
 }
 
